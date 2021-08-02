@@ -1,19 +1,8 @@
-A library for Dart developers.
+A midi binding to ALSA midi using FFI
 
-## Usage
-
-A simple usage example:
-
-```dart
-import 'package:midi/midi.dart';
-
-main() {
-  var awesome = new Awesome();
-}
-```
 
 ## Features and bugs
 
 Please file feature requests and bugs at the [issue tracker][tracker].
 
-[tracker]: http://example.com/issues/replaceme
+[tracker]: http://github.com/maks/dart_midi/issues
