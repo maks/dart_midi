@@ -32,6 +32,13 @@ void main() async {
     }
   });
 
+  // typically ctrl-c in shell will generate a sigint
+  ProcessSignal.sigint.watch().listen((signal) {
+    print('sigint disconnecting');
+    device.disconnect();
+    exit(0);
+  });
+
   await device.receivedMessages.forEach((mesg) {
     print('MIDI MESG: ${mesg.toDictionary}');
   });
