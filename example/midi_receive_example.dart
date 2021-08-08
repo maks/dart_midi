@@ -1,5 +1,5 @@
+import 'dart:async';
 import 'dart:io';
-
 import 'package:midi/midi.dart';
 
 void main() async {
@@ -19,11 +19,15 @@ void main() async {
 
   await device.connect();
 
-  print('connected to: ${device.toDictionary} \n' 'press q then enter to quit');
-  stdin.listen((data) {
+  print('connected to: ${device.toDictionary} \n' 'press q to quit');
+  // turn off line mode to get input immediately
+  stdin.lineMode = false;
+  late StreamSubscription sub;
+  sub = stdin.listen((data) {
     if (data.first == 'q'.codeUnitAt(0)) {
       print('disconnecting');
       device.disconnect();
+      sub.cancel();
       exit(0);
     }
   });
