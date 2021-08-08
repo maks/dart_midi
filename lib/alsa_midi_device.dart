@@ -200,7 +200,15 @@ class AlsaMidiDevice {
     return true;
   }
 
-  void send(Pointer<Uint8> buffer, int length) {
+  void send(Uint8List midiMessage) {
+    final buffer = calloc<Uint8>(midiMessage.lengthInBytes);
+    for (var i = 0; i < midiMessage.length; i++) {
+      buffer[i] = midiMessage[i];
+    }
+    _send(buffer, midiMessage.length);
+  }
+
+  void _send(Pointer<Uint8> buffer, int length) {
     if (outPort != null) {
       final voidBuffer = buffer.cast<Void>();
 
