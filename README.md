@@ -1,4 +1,8 @@
-A midi binding to ALSA midi using FFI
+A Dart Midi binding to ALSA midi using FFI
+
+## Acknowledgements
+
+The code is a port to pure Dart (removing Flutter dependencies) of work by Morten Boye Mortensen in the [Flutter midi plugin Linux platform](https://github.com/InvisibleWrench/flutter_midi_command_linux).
 
 
 ## Features and bugs
