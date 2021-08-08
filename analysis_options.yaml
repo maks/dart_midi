@@ -9,7 +9,8 @@ include: package:pedantic/analysis_options.yaml
 linter:
   rules:
     camel_case_types: false
+    omit_local_variable_types: false
 
 analyzer:
   exclude:
-    - lib/alsa_generated_binding.dart
+    - lib/alsa_generated_bindings.dart
