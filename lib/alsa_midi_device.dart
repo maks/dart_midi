@@ -105,15 +105,21 @@ class AlsaMidiDevice {
 
   bool connected = false;
 
-  String get name => 'hw:$cardId,$deviceId';
+  String name;
 
   Stream<MidiMessage> get receivedMessages => _rxStreamCtrl.stream;
+
+  final List<String> _inputPorts = [];
+  final List<String> _outputPorts = [];
+
+  List<String> get inputPorts => _inputPorts;
+  List<String> get outputPorts => _outputPorts;
 
   AlsaMidiDevice(
     this.ctl,
     this.cardId,
     this.deviceId,
-    String name,
+    this.name,
     this.type,
     this._rxStreamCtrl,
   ) {
@@ -138,9 +144,9 @@ class AlsaMidiDevice {
         print(
             'error: snd_rawmidi_info_get_subdevice in [$i] $status ${alsa.snd_rawmidi_info_get_subdevice_name(info.value).cast<Utf8>().toDartString()}');
       }
-      // else {
-      //   inputPorts.add(MidiPort(i, MidiPortType.IN));
-      // }
+      else {
+        _inputPorts.add('$i');
+      }
     }
 
     // Get output ports
@@ -152,9 +158,9 @@ class AlsaMidiDevice {
         print(
             'error: snd_rawmidi_info_get_subdevice out [$i] $status ${alsa.snd_rawmidi_info_get_subdevice_name(info.value).cast<Utf8>().toDartString()}');
       }
-      // else {
-      //   outputPorts.add(MidiPort(i, MidiPortType.OUT));
-      // }
+      else {
+        _outputPorts.add('$i');
+      }
     }
     calloc.free(info);
   }
