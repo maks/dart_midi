@@ -1,9 +1,14 @@
 name: midi
-description: A midi binding to ALSA midi using FFI
-version: 0.0.1
-homepage: https://github.com/maks/midi
+description: A Dart binding to ALSA midi using FFI
+version: 0.0.2
+homepage: https://github.com/maks/dart_midi
 environment:
   sdk: '>=2.12.0 <3.0.0'
+
+# Supports only Linux
+platforms:
+  linux:
+
 
 dependencies:
   ffi: ^1.0.0
