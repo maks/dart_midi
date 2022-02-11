@@ -1,3 +1,6 @@
+## 0.0.3
+  - Add hardwareId static method
+
 ## 0.0.2
   - Mark package as only supporting Linux
 
