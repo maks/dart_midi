@@ -54,8 +54,7 @@ int lengthOfMessageType(int type) {
 
 void _rxIsolate(Tuple2<SendPort, int> args) {
   final sendPort = args.item1;
-  final Pointer<a.snd_rawmidi_> inPort =
-      Pointer<a.snd_rawmidi_>.fromAddress(args.item2);
+  final Pointer<a.snd_rawmidi_> inPort = Pointer<a.snd_rawmidi_>.fromAddress(args.item2);
 
   //print('start isolate $sendPort, $inPort, ${args.item2}');
 
@@ -66,8 +65,7 @@ void _rxIsolate(Tuple2<SendPort, int> args) {
 
   while (true) {
     if ((status = alsa.snd_rawmidi_read(inPort, buffer.cast(), 1)) < 0) {
-      print(
-          'Problem reading MIDI input:${stringFromNative(alsa.snd_strerror(status))}');
+      print('Problem reading MIDI input:${stringFromNative(alsa.snd_strerror(status))}');
     } else {
       // print("byte ${buffer.value}");
       if (rxBuffer.isEmpty) {
@@ -86,8 +84,7 @@ void _rxIsolate(Tuple2<SendPort, int> args) {
 }
 
 class AlsaMidiDevice {
-  static final Map<String, AlsaMidiDevice> _connectedDevices =
-      <String, AlsaMidiDevice>{};
+  static final Map<String, AlsaMidiDevice> _connectedDevices = <String, AlsaMidiDevice>{};
 
   Pointer<Pointer<a.snd_rawmidi_>>? outPort;
   Pointer<Pointer<a.snd_rawmidi_>>? inPort;
@@ -143,8 +140,7 @@ class AlsaMidiDevice {
       if (alsa.snd_rawmidi_info_get_subdevice(info.value) < 0) {
         print(
             'error: snd_rawmidi_info_get_subdevice in [$i] $status ${alsa.snd_rawmidi_info_get_subdevice_name(info.value).cast<Utf8>().toDartString()}');
-      }
-      else {
+      } else {
         _inputPorts.add('$i');
       }
     }
@@ -157,8 +153,7 @@ class AlsaMidiDevice {
       if (alsa.snd_rawmidi_info_get_subdevice(info.value) < 0) {
         print(
             'error: snd_rawmidi_info_get_subdevice out [$i] $status ${alsa.snd_rawmidi_info_get_subdevice_name(info.value).cast<Utf8>().toDartString()}');
-      }
-      else {
+      } else {
         _outputPorts.add('$i');
       }
     }
@@ -169,12 +164,10 @@ class AlsaMidiDevice {
     outPort = calloc<Pointer<a.snd_rawmidi_>>();
     inPort = calloc<Pointer<a.snd_rawmidi_>>();
 
-    Pointer<Int8> name = 'hw:$cardId,$deviceId,0'.toNativeUtf8().cast<Int8>();
+    Pointer<Int8> name = '${hardwareId(cardId, deviceId)},0'.toNativeUtf8().cast<Int8>();
     //print('open out port ${stringFromNative(name)}');
     var status = 0;
-    if ((status = alsa.snd_rawmidi_open(
-            inPort!, outPort!, name, a.SND_RAWMIDI_SYNC)) <
-        0) {
+    if ((status = alsa.snd_rawmidi_open(inPort!, outPort!, name, a.SND_RAWMIDI_SYNC)) < 0) {
       print(
           'error: cannot open card number $cardId ${stringFromNative(alsa.snd_strerror(status))}');
       return false;
@@ -198,8 +191,7 @@ class AlsaMidiDevice {
 
     receivePort?.listen((data) {
       // print("rx data $data $_rxStreamCtrl ${_rxStreamCtrl.sink}");
-      var packet =
-          MidiMessage(data, DateTime.now().millisecondsSinceEpoch, this);
+      var packet = MidiMessage(data, DateTime.now().millisecondsSinceEpoch, this);
       _rxStreamCtrl.add(packet);
     });
 
@@ -219,11 +211,8 @@ class AlsaMidiDevice {
       final voidBuffer = buffer.cast<Void>();
 
       int status;
-      if ((status =
-              alsa.snd_rawmidi_write(outPort!.value, voidBuffer, length)) <
-          0) {
-        print(
-            'failed to write ${alsa.snd_strerror(status).cast<Utf8>().toDartString()}');
+      if ((status = alsa.snd_rawmidi_write(outPort!.value, voidBuffer, length)) < 0) {
+        print('failed to write ${alsa.snd_strerror(status).cast<Utf8>().toDartString()}');
       }
     } else {
       print('outport is null');
@@ -239,23 +228,19 @@ class AlsaMidiDevice {
     var status = 0;
     if (outPort != null) {
       if ((status = alsa.snd_rawmidi_drain(outPort!.value)) < 0) {
-        print(
-            'error: cannot drain out port $this ${stringFromNative(alsa.snd_strerror(status))}');
+        print('error: cannot drain out port $this ${stringFromNative(alsa.snd_strerror(status))}');
       }
       if ((status = alsa.snd_rawmidi_close(outPort!.value)) < 0) {
-        print(
-            'error: cannot close out port $this ${stringFromNative(alsa.snd_strerror(status))}');
+        print('error: cannot close out port $this ${stringFromNative(alsa.snd_strerror(status))}');
       }
     }
 
     if (inPort != null) {
       if ((status = alsa.snd_rawmidi_drain(inPort!.value)) < 0) {
-        print(
-            'error: cannot drain in port $this ${stringFromNative(alsa.snd_strerror(status))}');
+        print('error: cannot drain in port $this ${stringFromNative(alsa.snd_strerror(status))}');
       }
       if ((status = alsa.snd_rawmidi_close(inPort!.value)) < 0) {
-        print(
-            'error: cannot close in port $this ${stringFromNative(alsa.snd_strerror(status))}');
+        print('error: cannot close in port $this ${stringFromNative(alsa.snd_strerror(status))}');
       }
     }
     connected = false;
@@ -271,8 +256,7 @@ class AlsaMidiDevice {
   }
 
   static List<AlsaMidiDevice> getDevices() {
-    StreamController<MidiMessage> _rxStreamController =
-        StreamController<MidiMessage>.broadcast();
+    StreamController<MidiMessage> _rxStreamController = StreamController<MidiMessage>.broadcast();
     int status;
     var card = calloc<Int32>();
     card.elementAt(0).value = -1;
@@ -322,16 +306,11 @@ class AlsaMidiDevice {
         }
 
         if (device.value >= 0) {
-          var deviceId = 'hw:${card.value},${device.value}';
+          var deviceId = hardwareId(card.value, device.value);
           if (!_connectedDevices.containsKey(deviceId)) {
             // print('add unconnected device with id $deviceId');
-            devices.add(AlsaMidiDevice(
-                ctl.value,
-                card.value,
-                device.value,
-                stringFromNative(shortname.value),
-                'native',
-                _rxStreamController));
+            devices.add(AlsaMidiDevice(ctl.value, card.value, device.value,
+                stringFromNative(shortname.value), 'native', _rxStreamController));
           }
         }
       } while (device.value > 0);
@@ -352,4 +331,6 @@ class AlsaMidiDevice {
 
     return devices;
   }
+
+  static String hardwareId(int card, int device) => 'hw:$card,$device';
 }
