@@ -33,6 +33,9 @@ void main() async {
     }
   });
 
+  // sending this to a Korg Electribe 2 (synth or sampler) will cause it to send
+  // back a sysex message in response, see  Electribe 2 Midi implementation doc
+  // for more details
   device.send(Uint8List.fromList([0xf0, 0x42, 0x50, 0x00, 0x21, 0xf7]));
 
   // typically ctrl-c in shell will generate a sigint
