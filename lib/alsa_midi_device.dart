@@ -46,6 +46,8 @@ int lengthOfMessageType(int type) {
     case 0xB0:
     case 0xE0:
       return 3;
+    case 0xF0:
+      return -1;
     default:
       break;
   }
@@ -60,24 +62,35 @@ void _rxIsolate(Tuple2<SendPort, int> args) {
 
   int status = 0;
   int msgLength = 0;
+  //TODO: use a larger buffer than 1 byte, as 1 byte is likely very inefficient
   Pointer<Uint8> buffer = calloc<Uint8>();
   List<int> rxBuffer = [];
+  bool isSysex = false;
 
   while (true) {
     if ((status = alsa.snd_rawmidi_read(inPort, buffer.cast(), 1)) < 0) {
       print('Problem reading MIDI input:${stringFromNative(alsa.snd_strerror(status))}');
     } else {
-      // print("byte ${buffer.value}");
+      // print('rx byte [${rxBuffer.length}]: ${buffer.value.toRadixString(16)}');
       if (rxBuffer.isEmpty) {
         msgLength = lengthOfMessageType(buffer.value);
+        // print('msg len:$msgLength');
+        if (msgLength == -1) {
+          isSysex = true;
+        }
       }
 
       rxBuffer.add(buffer.value);
 
       if (rxBuffer.length == msgLength) {
-        // print("send buffer $rxBuffer $msgLength");
+        // print('recv buffer $rxBuffer $msgLength');
         sendPort.send(Uint8List.fromList(rxBuffer));
         rxBuffer.clear();
+      } else if (isSysex && buffer.value == 0xF7) {
+        // print('recv SYSEX buffer $rxBuffer');
+        sendPort.send(Uint8List.fromList(rxBuffer));
+        rxBuffer.clear();
+        isSysex = false;
       }
     }
   }
@@ -287,7 +300,7 @@ class AlsaMidiDevice {
             'error: cannot determine card shortname $card ${stringFromNative(alsa.snd_strerror(status))}');
         continue;
       }
-
+      print('name: ${stringFromNative(shortname.value)}');
       status = alsa.snd_ctl_open(ctl, name, 0);
       // print("status after ctl_open $status ctl $ctl ctl.value ${ctl.value}");
       if (status < 0) {

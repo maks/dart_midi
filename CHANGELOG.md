@@ -1,3 +1,6 @@
+## 0.0.4
+  - Add support for **receiving** sysex messages
+
 ## 0.0.3
   - Add hardwareId static method
 
