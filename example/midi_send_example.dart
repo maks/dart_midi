@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:midi/midi.dart';
@@ -24,4 +25,5 @@ void main() async {
   device.send(data);
   print('disconnecting');
   device.disconnect();
+  exit(0);
 }

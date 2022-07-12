@@ -1,18 +1,33 @@
 name: midi
 description: A Dart binding to ALSA midi using FFI
-version: 0.0.4
+version: 0.0.5
 homepage: https://github.com/maks/dart_midi
 environment:
-  sdk: '>=2.12.0 <3.0.0'
+  sdk: '>=2.14.0 <3.0.0'
 
 # Supports only Linux
 platforms:
   linux:
 
 dependencies:
-  ffi: ^1.0.0
+  ffi: ^2.0.1
   tuple: ^2.0.0
 
 dev_dependencies:
   pedantic: ^1.10.0
-  test: ^1.16.0
+  test: ^1.21.4
+  ffigen: ^6.0.1
+
+ffigen:
+  name: 'ALSA'
+  output: 'lib/alsa_generated_bindings.dart'
+  headers:
+    entry-points:
+      - '/usr/include/alsa/asoundlib.h'
+  compiler-opts: '-I/usr/lib/llvm-11/include/ -L/usr/lib/llvm-11/lib/ -I/usr/local/opt/llvm/include/ -Wno-nullability-completeness'
+  structs:
+    rename:
+      '_(.*)': '$1_'
+    member-rename:
+      '.*':
+        '_(.*)': '$1_'
