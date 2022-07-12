@@ -69,7 +69,8 @@ void _rxIsolate(Tuple2<SendPort, int> args) {
 
   while (true) {
     if ((status = alsa.snd_rawmidi_read(inPort, buffer.cast(), 1)) < 0) {
-      print('Problem reading MIDI input:${stringFromNative(alsa.snd_strerror(status))}');
+      print('Problem reading MIDI input status: $status => ${stringFromNative(alsa.snd_strerror(status))}');
+      throw 'Problem reading MIDI input: status = $status => ${stringFromNative(alsa.snd_strerror(status))}';
     } else {
       // print('rx byte [${rxBuffer.length}]: ${buffer.value.toRadixString(16)}');
       if (rxBuffer.isEmpty) {
@@ -196,6 +197,7 @@ class AlsaMidiDevice {
 
     errorPort?.listen((message) {
       print('isolate error message $message');
+      disconnect();
     });
 
     receivePort?.listen((data) {
@@ -242,6 +244,7 @@ class AlsaMidiDevice {
       if ((status = alsa.snd_rawmidi_close(outPort!.value)) < 0) {
         print('error: cannot close out port $this ${stringFromNative(alsa.snd_strerror(status))}');
       }
+      outPort = null;
     }
 
     if (inPort != null) {
@@ -251,6 +254,7 @@ class AlsaMidiDevice {
       if ((status = alsa.snd_rawmidi_close(inPort!.value)) < 0) {
         print('error: cannot close in port $this ${stringFromNative(alsa.snd_strerror(status))}');
       }
+      inPort = null;
     }
     connected = false;
   }
