@@ -1,10 +1,12 @@
 import 'dart:async';
-import 'package:ffi/ffi.dart';
-import 'package:midi/midi.dart';
 import 'dart:ffi';
 import 'dart:isolate';
 import 'dart:typed_data';
+
+import 'package:ffi/ffi.dart';
+import 'package:midi/midi.dart';
 import 'package:tuple/tuple.dart';
+
 import 'alsa_generated_bindings.dart' as a;
 
 final alsa = a.ALSA(DynamicLibrary.open('libasound.so.2'));
@@ -99,6 +101,8 @@ void _rxIsolate(Tuple2<SendPort, int> args) {
 
 class AlsaMidiDevice {
   static final Map<String, AlsaMidiDevice> _connectedDevices = <String, AlsaMidiDevice>{};
+  static StreamController<AlsaMidiDevice> _disconnectStreamCtrl = StreamController.broadcast();
+  static Stream<AlsaMidiDevice> get onDeviceDisconnected => _disconnectStreamCtrl.stream.asBroadcastStream();
 
   Pointer<Pointer<a.snd_rawmidi_>>? outPort;
   Pointer<Pointer<a.snd_rawmidi_>>? inPort;
@@ -235,6 +239,9 @@ class AlsaMidiDevice {
     errorPort?.close();
     _isolate?.kill(priority: Isolate.immediate);
     _isolate = null;
+
+    _connectedDevices.remove(hardwareId(cardId, deviceId));
+    _disconnectStreamCtrl.add(this);
 
     var status = 0;
     if (outPort != null) {
