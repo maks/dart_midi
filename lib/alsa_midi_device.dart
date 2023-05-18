@@ -101,7 +101,7 @@ void _rxIsolate(Tuple2<SendPort, int> args) {
 
 class AlsaMidiDevice {
   static final Map<String, AlsaMidiDevice> _connectedDevices = <String, AlsaMidiDevice>{};
-  static StreamController<AlsaMidiDevice> _disconnectStreamCtrl = StreamController.broadcast();
+  static final StreamController<AlsaMidiDevice> _disconnectStreamCtrl = StreamController.broadcast();
   static Stream<AlsaMidiDevice> get onDeviceDisconnected => _disconnectStreamCtrl.stream.asBroadcastStream();
 
   Pointer<Pointer<a.snd_rawmidi_>>? outPort;
@@ -195,9 +195,7 @@ class AlsaMidiDevice {
       _rxIsolate,
       Tuple2(receivePort!.sendPort, inPort!.value.address),
       onError: errorPort!.sendPort,
-    ).catchError((err, stackTrace) {
-      print('Could not launch RX isolate. $err\nStackTrace: $stackTrace');
-    });
+    );
 
     errorPort?.listen((message) {
       print('isolate error message $message');
