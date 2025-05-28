@@ -5290,9 +5290,9 @@ class ALSA {
   }
 
   late final _explicit_bzeroPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<ffi.Void>, ffi.Size)>>('explicit_bzero');
+          ffi
+          .NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Void>, ffi.Size)>>(
+      'explicit_bzero');
   late final _explicit_bzero = _explicit_bzeroPtr
       .asFunction<void Function(ffi.Pointer<ffi.Void>, int)>();
 
@@ -5698,8 +5698,8 @@ class ALSA {
   }
 
   late final _gmtimePtr = _lookup<
-          ffi.NativeFunction<ffi.Pointer<tm> Function(ffi.Pointer<time_t>)>>(
-      'gmtime');
+      ffi
+      .NativeFunction<ffi.Pointer<tm> Function(ffi.Pointer<time_t>)>>('gmtime');
   late final _gmtime =
       _gmtimePtr.asFunction<ffi.Pointer<tm> Function(ffi.Pointer<time_t>)>();
 
@@ -6229,9 +6229,9 @@ class ALSA {
   }
 
   late final _snd_async_del_handlerPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(
-              ffi.Pointer<snd_async_handler_t>)>>('snd_async_del_handler');
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_async_handler_t>)>>(
+      'snd_async_del_handler');
   late final _snd_async_del_handler = _snd_async_del_handlerPtr
       .asFunction<int Function(ffi.Pointer<snd_async_handler_t>)>();
 
@@ -6244,9 +6244,9 @@ class ALSA {
   }
 
   late final _snd_async_handler_get_fdPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(
-              ffi.Pointer<snd_async_handler_t>)>>('snd_async_handler_get_fd');
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_async_handler_t>)>>(
+      'snd_async_handler_get_fd');
   late final _snd_async_handler_get_fd = _snd_async_handler_get_fdPtr
       .asFunction<int Function(ffi.Pointer<snd_async_handler_t>)>();
 
@@ -6259,8 +6259,8 @@ class ALSA {
   }
 
   late final _snd_async_handler_get_signoPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<snd_async_handler_t>)>>(
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_async_handler_t>)>>(
       'snd_async_handler_get_signo');
   late final _snd_async_handler_get_signo = _snd_async_handler_get_signoPtr
       .asFunction<int Function(ffi.Pointer<snd_async_handler_t>)>();
@@ -6484,9 +6484,9 @@ class ALSA {
   }
 
   late final _snd_input_ungetcPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(
-              ffi.Pointer<snd_input_t>, ffi.Int)>>('snd_input_ungetc');
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_input_t>, ffi.Int)>>(
+      'snd_input_ungetc');
   late final _snd_input_ungetc = _snd_input_ungetcPtr
       .asFunction<int Function(ffi.Pointer<snd_input_t>, int)>();
 
@@ -6880,9 +6880,9 @@ class ALSA {
   }
 
   late final _snd_config_update_freePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(
-              ffi.Pointer<snd_config_update_t>)>>('snd_config_update_free');
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_config_update_t>)>>(
+      'snd_config_update_free');
   late final _snd_config_update_free = _snd_config_update_freePtr
       .asFunction<int Function(ffi.Pointer<snd_config_update_t>)>();
 
@@ -8243,9 +8243,9 @@ class ALSA {
   }
 
   late final _snd_pcm_nonblockPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(
-              ffi.Pointer<snd_pcm_t>, ffi.Int)>>('snd_pcm_nonblock');
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_pcm_t>, ffi.Int)>>(
+      'snd_pcm_nonblock');
   late final _snd_pcm_nonblock = _snd_pcm_nonblockPtr
       .asFunction<int Function(ffi.Pointer<snd_pcm_t>, int)>();
 
@@ -8604,9 +8604,9 @@ class ALSA {
   }
 
   late final _snd_pcm_avail_updatePtr = _lookup<
-      ffi.NativeFunction<
-          snd_pcm_sframes_t Function(
-              ffi.Pointer<snd_pcm_t>)>>('snd_pcm_avail_update');
+          ffi
+          .NativeFunction<snd_pcm_sframes_t Function(ffi.Pointer<snd_pcm_t>)>>(
+      'snd_pcm_avail_update');
   late final _snd_pcm_avail_update = _snd_pcm_avail_updatePtr
       .asFunction<int Function(ffi.Pointer<snd_pcm_t>)>();
 
@@ -8641,9 +8641,9 @@ class ALSA {
   }
 
   late final _snd_pcm_rewindablePtr = _lookup<
-      ffi.NativeFunction<
-          snd_pcm_sframes_t Function(
-              ffi.Pointer<snd_pcm_t>)>>('snd_pcm_rewindable');
+          ffi
+          .NativeFunction<snd_pcm_sframes_t Function(ffi.Pointer<snd_pcm_t>)>>(
+      'snd_pcm_rewindable');
   late final _snd_pcm_rewindable =
       _snd_pcm_rewindablePtr.asFunction<int Function(ffi.Pointer<snd_pcm_t>)>();
 
@@ -8673,9 +8673,9 @@ class ALSA {
   }
 
   late final _snd_pcm_forwardablePtr = _lookup<
-      ffi.NativeFunction<
-          snd_pcm_sframes_t Function(
-              ffi.Pointer<snd_pcm_t>)>>('snd_pcm_forwardable');
+          ffi
+          .NativeFunction<snd_pcm_sframes_t Function(ffi.Pointer<snd_pcm_t>)>>(
+      'snd_pcm_forwardable');
   late final _snd_pcm_forwardable = _snd_pcm_forwardablePtr
       .asFunction<int Function(ffi.Pointer<snd_pcm_t>)>();
 
@@ -9389,8 +9389,8 @@ class ALSA {
   }
 
   late final _snd_pcm_hw_params_can_mmap_sample_resolutionPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<snd_pcm_hw_params_t>)>>(
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_pcm_hw_params_t>)>>(
       'snd_pcm_hw_params_can_mmap_sample_resolution');
   late final _snd_pcm_hw_params_can_mmap_sample_resolution =
       _snd_pcm_hw_params_can_mmap_sample_resolutionPtr
@@ -9405,8 +9405,8 @@ class ALSA {
   }
 
   late final _snd_pcm_hw_params_is_doublePtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<snd_pcm_hw_params_t>)>>(
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_pcm_hw_params_t>)>>(
       'snd_pcm_hw_params_is_double');
   late final _snd_pcm_hw_params_is_double = _snd_pcm_hw_params_is_doublePtr
       .asFunction<int Function(ffi.Pointer<snd_pcm_hw_params_t>)>();
@@ -9420,9 +9420,9 @@ class ALSA {
   }
 
   late final _snd_pcm_hw_params_is_batchPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(
-              ffi.Pointer<snd_pcm_hw_params_t>)>>('snd_pcm_hw_params_is_batch');
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_pcm_hw_params_t>)>>(
+      'snd_pcm_hw_params_is_batch');
   late final _snd_pcm_hw_params_is_batch = _snd_pcm_hw_params_is_batchPtr
       .asFunction<int Function(ffi.Pointer<snd_pcm_hw_params_t>)>();
 
@@ -9435,8 +9435,8 @@ class ALSA {
   }
 
   late final _snd_pcm_hw_params_is_block_transferPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<snd_pcm_hw_params_t>)>>(
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_pcm_hw_params_t>)>>(
       'snd_pcm_hw_params_is_block_transfer');
   late final _snd_pcm_hw_params_is_block_transfer =
       _snd_pcm_hw_params_is_block_transferPtr
@@ -9451,8 +9451,8 @@ class ALSA {
   }
 
   late final _snd_pcm_hw_params_is_monotonicPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<snd_pcm_hw_params_t>)>>(
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_pcm_hw_params_t>)>>(
       'snd_pcm_hw_params_is_monotonic');
   late final _snd_pcm_hw_params_is_monotonic =
       _snd_pcm_hw_params_is_monotonicPtr
@@ -9467,8 +9467,8 @@ class ALSA {
   }
 
   late final _snd_pcm_hw_params_can_overrangePtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<snd_pcm_hw_params_t>)>>(
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_pcm_hw_params_t>)>>(
       'snd_pcm_hw_params_can_overrange');
   late final _snd_pcm_hw_params_can_overrange =
       _snd_pcm_hw_params_can_overrangePtr
@@ -9483,8 +9483,8 @@ class ALSA {
   }
 
   late final _snd_pcm_hw_params_can_pausePtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<snd_pcm_hw_params_t>)>>(
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_pcm_hw_params_t>)>>(
       'snd_pcm_hw_params_can_pause');
   late final _snd_pcm_hw_params_can_pause = _snd_pcm_hw_params_can_pausePtr
       .asFunction<int Function(ffi.Pointer<snd_pcm_hw_params_t>)>();
@@ -9498,8 +9498,8 @@ class ALSA {
   }
 
   late final _snd_pcm_hw_params_can_resumePtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<snd_pcm_hw_params_t>)>>(
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_pcm_hw_params_t>)>>(
       'snd_pcm_hw_params_can_resume');
   late final _snd_pcm_hw_params_can_resume = _snd_pcm_hw_params_can_resumePtr
       .asFunction<int Function(ffi.Pointer<snd_pcm_hw_params_t>)>();
@@ -9513,8 +9513,8 @@ class ALSA {
   }
 
   late final _snd_pcm_hw_params_is_half_duplexPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<snd_pcm_hw_params_t>)>>(
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_pcm_hw_params_t>)>>(
       'snd_pcm_hw_params_is_half_duplex');
   late final _snd_pcm_hw_params_is_half_duplex =
       _snd_pcm_hw_params_is_half_duplexPtr
@@ -9529,8 +9529,8 @@ class ALSA {
   }
 
   late final _snd_pcm_hw_params_is_joint_duplexPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<snd_pcm_hw_params_t>)>>(
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_pcm_hw_params_t>)>>(
       'snd_pcm_hw_params_is_joint_duplex');
   late final _snd_pcm_hw_params_is_joint_duplex =
       _snd_pcm_hw_params_is_joint_duplexPtr
@@ -9545,8 +9545,8 @@ class ALSA {
   }
 
   late final _snd_pcm_hw_params_can_sync_startPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<snd_pcm_hw_params_t>)>>(
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_pcm_hw_params_t>)>>(
       'snd_pcm_hw_params_can_sync_start');
   late final _snd_pcm_hw_params_can_sync_start =
       _snd_pcm_hw_params_can_sync_startPtr
@@ -9561,8 +9561,8 @@ class ALSA {
   }
 
   late final _snd_pcm_hw_params_can_disable_period_wakeupPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<snd_pcm_hw_params_t>)>>(
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_pcm_hw_params_t>)>>(
       'snd_pcm_hw_params_can_disable_period_wakeup');
   late final _snd_pcm_hw_params_can_disable_period_wakeup =
       _snd_pcm_hw_params_can_disable_period_wakeupPtr
@@ -9577,8 +9577,8 @@ class ALSA {
   }
 
   late final _snd_pcm_hw_params_supports_audio_wallclock_tsPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<snd_pcm_hw_params_t>)>>(
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_pcm_hw_params_t>)>>(
       'snd_pcm_hw_params_supports_audio_wallclock_ts');
   late final _snd_pcm_hw_params_supports_audio_wallclock_ts =
       _snd_pcm_hw_params_supports_audio_wallclock_tsPtr
@@ -9633,8 +9633,8 @@ class ALSA {
   }
 
   late final _snd_pcm_hw_params_get_sbitsPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<snd_pcm_hw_params_t>)>>(
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_pcm_hw_params_t>)>>(
       'snd_pcm_hw_params_get_sbits');
   late final _snd_pcm_hw_params_get_sbits = _snd_pcm_hw_params_get_sbitsPtr
       .asFunction<int Function(ffi.Pointer<snd_pcm_hw_params_t>)>();
@@ -9648,8 +9648,8 @@ class ALSA {
   }
 
   late final _snd_pcm_hw_params_get_fifo_sizePtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<snd_pcm_hw_params_t>)>>(
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_pcm_hw_params_t>)>>(
       'snd_pcm_hw_params_get_fifo_size');
   late final _snd_pcm_hw_params_get_fifo_size =
       _snd_pcm_hw_params_get_fifo_sizePtr
@@ -9690,9 +9690,9 @@ class ALSA {
   }
 
   late final _snd_pcm_hw_params_freePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<snd_pcm_hw_params_t>)>>('snd_pcm_hw_params_free');
+          ffi
+          .NativeFunction<ffi.Void Function(ffi.Pointer<snd_pcm_hw_params_t>)>>(
+      'snd_pcm_hw_params_free');
   late final _snd_pcm_hw_params_free = _snd_pcm_hw_params_freePtr
       .asFunction<void Function(ffi.Pointer<snd_pcm_hw_params_t>)>();
 
@@ -12368,9 +12368,9 @@ class ALSA {
   }
 
   late final _snd_pcm_sw_params_freePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<snd_pcm_sw_params_t>)>>('snd_pcm_sw_params_free');
+          ffi
+          .NativeFunction<ffi.Void Function(ffi.Pointer<snd_pcm_sw_params_t>)>>(
+      'snd_pcm_sw_params_free');
   late final _snd_pcm_sw_params_free = _snd_pcm_sw_params_freePtr
       .asFunction<void Function(ffi.Pointer<snd_pcm_sw_params_t>)>();
 
@@ -13290,9 +13290,9 @@ class ALSA {
   }
 
   late final _snd_pcm_status_get_statePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<snd_pcm_status_t>)>>('snd_pcm_status_get_state');
+          ffi
+          .NativeFunction<ffi.Int32 Function(ffi.Pointer<snd_pcm_status_t>)>>(
+      'snd_pcm_status_get_state');
   late final _snd_pcm_status_get_state = _snd_pcm_status_get_statePtr
       .asFunction<int Function(ffi.Pointer<snd_pcm_status_t>)>();
 
@@ -14189,9 +14189,9 @@ class ALSA {
   }
 
   late final _snd_pcm_bytes_to_samplesPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Long Function(
-              ffi.Pointer<snd_pcm_t>, ssize_t)>>('snd_pcm_bytes_to_samples');
+          ffi
+          .NativeFunction<ffi.Long Function(ffi.Pointer<snd_pcm_t>, ssize_t)>>(
+      'snd_pcm_bytes_to_samples');
   late final _snd_pcm_bytes_to_samples = _snd_pcm_bytes_to_samplesPtr
       .asFunction<int Function(ffi.Pointer<snd_pcm_t>, int)>();
 
@@ -14206,9 +14206,9 @@ class ALSA {
   }
 
   late final _snd_pcm_samples_to_bytesPtr = _lookup<
-      ffi.NativeFunction<
-          ssize_t Function(
-              ffi.Pointer<snd_pcm_t>, ffi.Long)>>('snd_pcm_samples_to_bytes');
+          ffi
+          .NativeFunction<ssize_t Function(ffi.Pointer<snd_pcm_t>, ffi.Long)>>(
+      'snd_pcm_samples_to_bytes');
   late final _snd_pcm_samples_to_bytes = _snd_pcm_samples_to_bytesPtr
       .asFunction<int Function(ffi.Pointer<snd_pcm_t>, int)>();
 
@@ -14472,9 +14472,9 @@ class ALSA {
   }
 
   late final _snd_pcm_meter_get_bufsizePtr = _lookup<
-      ffi.NativeFunction<
-          snd_pcm_uframes_t Function(
-              ffi.Pointer<snd_pcm_t>)>>('snd_pcm_meter_get_bufsize');
+          ffi
+          .NativeFunction<snd_pcm_uframes_t Function(ffi.Pointer<snd_pcm_t>)>>(
+      'snd_pcm_meter_get_bufsize');
   late final _snd_pcm_meter_get_bufsize = _snd_pcm_meter_get_bufsizePtr
       .asFunction<int Function(ffi.Pointer<snd_pcm_t>)>();
 
@@ -14515,9 +14515,9 @@ class ALSA {
   }
 
   late final _snd_pcm_meter_get_nowPtr = _lookup<
-      ffi.NativeFunction<
-          snd_pcm_uframes_t Function(
-              ffi.Pointer<snd_pcm_t>)>>('snd_pcm_meter_get_now');
+          ffi
+          .NativeFunction<snd_pcm_uframes_t Function(ffi.Pointer<snd_pcm_t>)>>(
+      'snd_pcm_meter_get_now');
   late final _snd_pcm_meter_get_now = _snd_pcm_meter_get_nowPtr
       .asFunction<int Function(ffi.Pointer<snd_pcm_t>)>();
 
@@ -14530,9 +14530,9 @@ class ALSA {
   }
 
   late final _snd_pcm_meter_get_boundaryPtr = _lookup<
-      ffi.NativeFunction<
-          snd_pcm_uframes_t Function(
-              ffi.Pointer<snd_pcm_t>)>>('snd_pcm_meter_get_boundary');
+          ffi
+          .NativeFunction<snd_pcm_uframes_t Function(ffi.Pointer<snd_pcm_t>)>>(
+      'snd_pcm_meter_get_boundary');
   late final _snd_pcm_meter_get_boundary = _snd_pcm_meter_get_boundaryPtr
       .asFunction<int Function(ffi.Pointer<snd_pcm_t>)>();
 
@@ -15483,9 +15483,9 @@ class ALSA {
   }
 
   late final _snd_rawmidi_info_freePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<snd_rawmidi_info_t>)>>('snd_rawmidi_info_free');
+          ffi
+          .NativeFunction<ffi.Void Function(ffi.Pointer<snd_rawmidi_info_t>)>>(
+      'snd_rawmidi_info_free');
   late final _snd_rawmidi_info_free = _snd_rawmidi_info_freePtr
       .asFunction<void Function(ffi.Pointer<snd_rawmidi_info_t>)>();
 
@@ -15547,9 +15547,9 @@ class ALSA {
   }
 
   late final _snd_rawmidi_info_get_streamPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<snd_rawmidi_info_t>)>>('snd_rawmidi_info_get_stream');
+          ffi
+          .NativeFunction<ffi.Int32 Function(ffi.Pointer<snd_rawmidi_info_t>)>>(
+      'snd_rawmidi_info_get_stream');
   late final _snd_rawmidi_info_get_stream = _snd_rawmidi_info_get_streamPtr
       .asFunction<int Function(ffi.Pointer<snd_rawmidi_info_t>)>();
 
@@ -15562,9 +15562,9 @@ class ALSA {
   }
 
   late final _snd_rawmidi_info_get_cardPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(
-              ffi.Pointer<snd_rawmidi_info_t>)>>('snd_rawmidi_info_get_card');
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_rawmidi_info_t>)>>(
+      'snd_rawmidi_info_get_card');
   late final _snd_rawmidi_info_get_card = _snd_rawmidi_info_get_cardPtr
       .asFunction<int Function(ffi.Pointer<snd_rawmidi_info_t>)>();
 
@@ -15902,8 +15902,8 @@ class ALSA {
   }
 
   late final _snd_rawmidi_params_get_no_active_sensingPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<snd_rawmidi_params_t>)>>(
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_rawmidi_params_t>)>>(
       'snd_rawmidi_params_get_no_active_sensing');
   late final _snd_rawmidi_params_get_no_active_sensing =
       _snd_rawmidi_params_get_no_active_sensingPtr
@@ -16940,9 +16940,9 @@ class ALSA {
   }
 
   late final _snd_timer_ginfo_freePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<snd_timer_ginfo_t>)>>('snd_timer_ginfo_free');
+          ffi
+          .NativeFunction<ffi.Void Function(ffi.Pointer<snd_timer_ginfo_t>)>>(
+      'snd_timer_ginfo_free');
   late final _snd_timer_ginfo_free = _snd_timer_ginfo_freePtr
       .asFunction<void Function(ffi.Pointer<snd_timer_ginfo_t>)>();
 
@@ -17282,9 +17282,9 @@ class ALSA {
   }
 
   late final _snd_timer_params_freePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<snd_timer_params_t>)>>('snd_timer_params_free');
+          ffi
+          .NativeFunction<ffi.Void Function(ffi.Pointer<snd_timer_params_t>)>>(
+      'snd_timer_params_free');
   late final _snd_timer_params_free = _snd_timer_params_freePtr
       .asFunction<void Function(ffi.Pointer<snd_timer_params_t>)>();
 
@@ -17333,8 +17333,8 @@ class ALSA {
   }
 
   late final _snd_timer_params_get_auto_startPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<snd_timer_params_t>)>>(
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_timer_params_t>)>>(
       'snd_timer_params_get_auto_start');
   late final _snd_timer_params_get_auto_start =
       _snd_timer_params_get_auto_startPtr
@@ -17367,8 +17367,8 @@ class ALSA {
   }
 
   late final _snd_timer_params_get_exclusivePtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<snd_timer_params_t>)>>(
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_timer_params_t>)>>(
       'snd_timer_params_get_exclusive');
   late final _snd_timer_params_get_exclusive =
       _snd_timer_params_get_exclusivePtr
@@ -17401,8 +17401,8 @@ class ALSA {
   }
 
   late final _snd_timer_params_get_early_eventPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<snd_timer_params_t>)>>(
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_timer_params_t>)>>(
       'snd_timer_params_get_early_event');
   late final _snd_timer_params_get_early_event =
       _snd_timer_params_get_early_eventPtr
@@ -17434,9 +17434,9 @@ class ALSA {
   }
 
   late final _snd_timer_params_get_ticksPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Long Function(
-              ffi.Pointer<snd_timer_params_t>)>>('snd_timer_params_get_ticks');
+          ffi
+          .NativeFunction<ffi.Long Function(ffi.Pointer<snd_timer_params_t>)>>(
+      'snd_timer_params_get_ticks');
   late final _snd_timer_params_get_ticks = _snd_timer_params_get_ticksPtr
       .asFunction<int Function(ffi.Pointer<snd_timer_params_t>)>();
 
@@ -17467,8 +17467,8 @@ class ALSA {
   }
 
   late final _snd_timer_params_get_queue_sizePtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Long Function(ffi.Pointer<snd_timer_params_t>)>>(
+          ffi
+          .NativeFunction<ffi.Long Function(ffi.Pointer<snd_timer_params_t>)>>(
       'snd_timer_params_get_queue_size');
   late final _snd_timer_params_get_queue_size =
       _snd_timer_params_get_queue_sizePtr
@@ -17540,9 +17540,9 @@ class ALSA {
   }
 
   late final _snd_timer_status_freePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<snd_timer_status_t>)>>('snd_timer_status_free');
+          ffi
+          .NativeFunction<ffi.Void Function(ffi.Pointer<snd_timer_status_t>)>>(
+      'snd_timer_status_free');
   late final _snd_timer_status_free = _snd_timer_status_freePtr
       .asFunction<void Function(ffi.Pointer<snd_timer_status_t>)>();
 
@@ -17589,8 +17589,8 @@ class ALSA {
   }
 
   late final _snd_timer_status_get_resolutionPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Long Function(ffi.Pointer<snd_timer_status_t>)>>(
+          ffi
+          .NativeFunction<ffi.Long Function(ffi.Pointer<snd_timer_status_t>)>>(
       'snd_timer_status_get_resolution');
   late final _snd_timer_status_get_resolution =
       _snd_timer_status_get_resolutionPtr
@@ -17605,9 +17605,9 @@ class ALSA {
   }
 
   late final _snd_timer_status_get_lostPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Long Function(
-              ffi.Pointer<snd_timer_status_t>)>>('snd_timer_status_get_lost');
+          ffi
+          .NativeFunction<ffi.Long Function(ffi.Pointer<snd_timer_status_t>)>>(
+      'snd_timer_status_get_lost');
   late final _snd_timer_status_get_lost = _snd_timer_status_get_lostPtr
       .asFunction<int Function(ffi.Pointer<snd_timer_status_t>)>();
 
@@ -17620,8 +17620,8 @@ class ALSA {
   }
 
   late final _snd_timer_status_get_overrunPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Long Function(ffi.Pointer<snd_timer_status_t>)>>(
+          ffi
+          .NativeFunction<ffi.Long Function(ffi.Pointer<snd_timer_status_t>)>>(
       'snd_timer_status_get_overrun');
   late final _snd_timer_status_get_overrun = _snd_timer_status_get_overrunPtr
       .asFunction<int Function(ffi.Pointer<snd_timer_status_t>)>();
@@ -17635,9 +17635,9 @@ class ALSA {
   }
 
   late final _snd_timer_status_get_queuePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Long Function(
-              ffi.Pointer<snd_timer_status_t>)>>('snd_timer_status_get_queue');
+          ffi
+          .NativeFunction<ffi.Long Function(ffi.Pointer<snd_timer_status_t>)>>(
+      'snd_timer_status_get_queue');
   late final _snd_timer_status_get_queue = _snd_timer_status_get_queuePtr
       .asFunction<int Function(ffi.Pointer<snd_timer_status_t>)>();
 
@@ -17759,9 +17759,9 @@ class ALSA {
   }
 
   late final _snd_hwdep_nonblockPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(
-              ffi.Pointer<snd_hwdep_t>, ffi.Int)>>('snd_hwdep_nonblock');
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_hwdep_t>, ffi.Int)>>(
+      'snd_hwdep_nonblock');
   late final _snd_hwdep_nonblock = _snd_hwdep_nonblockPtr
       .asFunction<int Function(ffi.Pointer<snd_hwdep_t>, int)>();
 
@@ -17999,9 +17999,9 @@ class ALSA {
   }
 
   late final _snd_hwdep_info_get_ifacePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<snd_hwdep_info_t>)>>('snd_hwdep_info_get_iface');
+          ffi
+          .NativeFunction<ffi.Int32 Function(ffi.Pointer<snd_hwdep_info_t>)>>(
+      'snd_hwdep_info_get_iface');
   late final _snd_hwdep_info_get_iface = _snd_hwdep_info_get_ifacePtr
       .asFunction<int Function(ffi.Pointer<snd_hwdep_info_t>)>();
 
@@ -18596,9 +18596,9 @@ class ALSA {
   }
 
   late final _snd_ctl_nonblockPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(
-              ffi.Pointer<snd_ctl_t>, ffi.Int)>>('snd_ctl_nonblock');
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_ctl_t>, ffi.Int)>>(
+      'snd_ctl_nonblock');
   late final _snd_ctl_nonblock = _snd_ctl_nonblockPtr
       .asFunction<int Function(ffi.Pointer<snd_ctl_t>, int)>();
 
@@ -18717,9 +18717,9 @@ class ALSA {
   }
 
   late final _snd_ctl_subscribe_eventsPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(
-              ffi.Pointer<snd_ctl_t>, ffi.Int)>>('snd_ctl_subscribe_events');
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_ctl_t>, ffi.Int)>>(
+      'snd_ctl_subscribe_events');
   late final _snd_ctl_subscribe_events = _snd_ctl_subscribe_eventsPtr
       .asFunction<int Function(ffi.Pointer<snd_ctl_t>, int)>();
 
@@ -18993,9 +18993,9 @@ class ALSA {
   }
 
   late final _snd_ctl_pcm_prefer_subdevicePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(ffi.Pointer<snd_ctl_t>,
-              ffi.Int)>>('snd_ctl_pcm_prefer_subdevice');
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_ctl_t>, ffi.Int)>>(
+      'snd_ctl_pcm_prefer_subdevice');
   late final _snd_ctl_pcm_prefer_subdevice = _snd_ctl_pcm_prefer_subdevicePtr
       .asFunction<int Function(ffi.Pointer<snd_ctl_t>, int)>();
 
@@ -19044,9 +19044,9 @@ class ALSA {
   }
 
   late final _snd_ctl_rawmidi_prefer_subdevicePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(ffi.Pointer<snd_ctl_t>,
-              ffi.Int)>>('snd_ctl_rawmidi_prefer_subdevice');
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_ctl_t>, ffi.Int)>>(
+      'snd_ctl_rawmidi_prefer_subdevice');
   late final _snd_ctl_rawmidi_prefer_subdevice =
       _snd_ctl_rawmidi_prefer_subdevicePtr
           .asFunction<int Function(ffi.Pointer<snd_ctl_t>, int)>();
@@ -19341,8 +19341,8 @@ class ALSA {
   }
 
   late final _snd_ctl_elem_list_free_spacePtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Void Function(ffi.Pointer<snd_ctl_elem_list_t>)>>(
+          ffi
+          .NativeFunction<ffi.Void Function(ffi.Pointer<snd_ctl_elem_list_t>)>>(
       'snd_ctl_elem_list_free_space');
   late final _snd_ctl_elem_list_free_space = _snd_ctl_elem_list_free_spacePtr
       .asFunction<void Function(ffi.Pointer<snd_ctl_elem_list_t>)>();
@@ -19445,9 +19445,9 @@ class ALSA {
   }
 
   late final _snd_ctl_elem_id_freePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<snd_ctl_elem_id_t>)>>('snd_ctl_elem_id_free');
+          ffi
+          .NativeFunction<ffi.Void Function(ffi.Pointer<snd_ctl_elem_id_t>)>>(
+      'snd_ctl_elem_id_free');
   late final _snd_ctl_elem_id_free = _snd_ctl_elem_id_freePtr
       .asFunction<void Function(ffi.Pointer<snd_ctl_elem_id_t>)>();
 
@@ -19460,9 +19460,9 @@ class ALSA {
   }
 
   late final _snd_ctl_elem_id_clearPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<snd_ctl_elem_id_t>)>>('snd_ctl_elem_id_clear');
+          ffi
+          .NativeFunction<ffi.Void Function(ffi.Pointer<snd_ctl_elem_id_t>)>>(
+      'snd_ctl_elem_id_clear');
   late final _snd_ctl_elem_id_clear = _snd_ctl_elem_id_clearPtr
       .asFunction<void Function(ffi.Pointer<snd_ctl_elem_id_t>)>();
 
@@ -19547,8 +19547,8 @@ class ALSA {
   }
 
   late final _snd_ctl_elem_id_get_interfacePtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int32 Function(ffi.Pointer<snd_ctl_elem_id_t>)>>(
+          ffi
+          .NativeFunction<ffi.Int32 Function(ffi.Pointer<snd_ctl_elem_id_t>)>>(
       'snd_ctl_elem_id_get_interface');
   late final _snd_ctl_elem_id_get_interface = _snd_ctl_elem_id_get_interfacePtr
       .asFunction<int Function(ffi.Pointer<snd_ctl_elem_id_t>)>();
@@ -19753,9 +19753,9 @@ class ALSA {
   }
 
   late final _snd_ctl_card_info_freePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<snd_ctl_card_info_t>)>>('snd_ctl_card_info_free');
+          ffi
+          .NativeFunction<ffi.Void Function(ffi.Pointer<snd_ctl_card_info_t>)>>(
+      'snd_ctl_card_info_free');
   late final _snd_ctl_card_info_free = _snd_ctl_card_info_freePtr
       .asFunction<void Function(ffi.Pointer<snd_ctl_card_info_t>)>();
 
@@ -19768,9 +19768,9 @@ class ALSA {
   }
 
   late final _snd_ctl_card_info_clearPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<snd_ctl_card_info_t>)>>('snd_ctl_card_info_clear');
+          ffi
+          .NativeFunction<ffi.Void Function(ffi.Pointer<snd_ctl_card_info_t>)>>(
+      'snd_ctl_card_info_clear');
   late final _snd_ctl_card_info_clear = _snd_ctl_card_info_clearPtr
       .asFunction<void Function(ffi.Pointer<snd_ctl_card_info_t>)>();
 
@@ -19801,9 +19801,9 @@ class ALSA {
   }
 
   late final _snd_ctl_card_info_get_cardPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(
-              ffi.Pointer<snd_ctl_card_info_t>)>>('snd_ctl_card_info_get_card');
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_ctl_card_info_t>)>>(
+      'snd_ctl_card_info_get_card');
   late final _snd_ctl_card_info_get_card = _snd_ctl_card_info_get_cardPtr
       .asFunction<int Function(ffi.Pointer<snd_ctl_card_info_t>)>();
 
@@ -20026,9 +20026,9 @@ class ALSA {
   }
 
   late final _snd_ctl_elem_list_freePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<snd_ctl_elem_list_t>)>>('snd_ctl_elem_list_free');
+          ffi
+          .NativeFunction<ffi.Void Function(ffi.Pointer<snd_ctl_elem_list_t>)>>(
+      'snd_ctl_elem_list_free');
   late final _snd_ctl_elem_list_free = _snd_ctl_elem_list_freePtr
       .asFunction<void Function(ffi.Pointer<snd_ctl_elem_list_t>)>();
 
@@ -20041,9 +20041,9 @@ class ALSA {
   }
 
   late final _snd_ctl_elem_list_clearPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<snd_ctl_elem_list_t>)>>('snd_ctl_elem_list_clear');
+          ffi
+          .NativeFunction<ffi.Void Function(ffi.Pointer<snd_ctl_elem_list_t>)>>(
+      'snd_ctl_elem_list_clear');
   late final _snd_ctl_elem_list_clear = _snd_ctl_elem_list_clearPtr
       .asFunction<void Function(ffi.Pointer<snd_ctl_elem_list_t>)>();
 
@@ -20274,9 +20274,9 @@ class ALSA {
   }
 
   late final _snd_ctl_elem_info_freePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<snd_ctl_elem_info_t>)>>('snd_ctl_elem_info_free');
+          ffi
+          .NativeFunction<ffi.Void Function(ffi.Pointer<snd_ctl_elem_info_t>)>>(
+      'snd_ctl_elem_info_free');
   late final _snd_ctl_elem_info_free = _snd_ctl_elem_info_freePtr
       .asFunction<void Function(ffi.Pointer<snd_ctl_elem_info_t>)>();
 
@@ -20289,9 +20289,9 @@ class ALSA {
   }
 
   late final _snd_ctl_elem_info_clearPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<snd_ctl_elem_info_t>)>>('snd_ctl_elem_info_clear');
+          ffi
+          .NativeFunction<ffi.Void Function(ffi.Pointer<snd_ctl_elem_info_t>)>>(
+      'snd_ctl_elem_info_clear');
   late final _snd_ctl_elem_info_clear = _snd_ctl_elem_info_clearPtr
       .asFunction<void Function(ffi.Pointer<snd_ctl_elem_info_t>)>();
 
@@ -20337,8 +20337,8 @@ class ALSA {
   }
 
   late final _snd_ctl_elem_info_is_readablePtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<snd_ctl_elem_info_t>)>>(
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_ctl_elem_info_t>)>>(
       'snd_ctl_elem_info_is_readable');
   late final _snd_ctl_elem_info_is_readable = _snd_ctl_elem_info_is_readablePtr
       .asFunction<int Function(ffi.Pointer<snd_ctl_elem_info_t>)>();
@@ -20352,8 +20352,8 @@ class ALSA {
   }
 
   late final _snd_ctl_elem_info_is_writablePtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<snd_ctl_elem_info_t>)>>(
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_ctl_elem_info_t>)>>(
       'snd_ctl_elem_info_is_writable');
   late final _snd_ctl_elem_info_is_writable = _snd_ctl_elem_info_is_writablePtr
       .asFunction<int Function(ffi.Pointer<snd_ctl_elem_info_t>)>();
@@ -20367,8 +20367,8 @@ class ALSA {
   }
 
   late final _snd_ctl_elem_info_is_volatilePtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<snd_ctl_elem_info_t>)>>(
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_ctl_elem_info_t>)>>(
       'snd_ctl_elem_info_is_volatile');
   late final _snd_ctl_elem_info_is_volatile = _snd_ctl_elem_info_is_volatilePtr
       .asFunction<int Function(ffi.Pointer<snd_ctl_elem_info_t>)>();
@@ -20382,8 +20382,8 @@ class ALSA {
   }
 
   late final _snd_ctl_elem_info_is_inactivePtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<snd_ctl_elem_info_t>)>>(
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_ctl_elem_info_t>)>>(
       'snd_ctl_elem_info_is_inactive');
   late final _snd_ctl_elem_info_is_inactive = _snd_ctl_elem_info_is_inactivePtr
       .asFunction<int Function(ffi.Pointer<snd_ctl_elem_info_t>)>();
@@ -20397,8 +20397,8 @@ class ALSA {
   }
 
   late final _snd_ctl_elem_info_is_lockedPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<snd_ctl_elem_info_t>)>>(
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_ctl_elem_info_t>)>>(
       'snd_ctl_elem_info_is_locked');
   late final _snd_ctl_elem_info_is_locked = _snd_ctl_elem_info_is_lockedPtr
       .asFunction<int Function(ffi.Pointer<snd_ctl_elem_info_t>)>();
@@ -20412,8 +20412,8 @@ class ALSA {
   }
 
   late final _snd_ctl_elem_info_is_tlv_readablePtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<snd_ctl_elem_info_t>)>>(
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_ctl_elem_info_t>)>>(
       'snd_ctl_elem_info_is_tlv_readable');
   late final _snd_ctl_elem_info_is_tlv_readable =
       _snd_ctl_elem_info_is_tlv_readablePtr
@@ -20428,8 +20428,8 @@ class ALSA {
   }
 
   late final _snd_ctl_elem_info_is_tlv_writablePtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<snd_ctl_elem_info_t>)>>(
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_ctl_elem_info_t>)>>(
       'snd_ctl_elem_info_is_tlv_writable');
   late final _snd_ctl_elem_info_is_tlv_writable =
       _snd_ctl_elem_info_is_tlv_writablePtr
@@ -20444,8 +20444,8 @@ class ALSA {
   }
 
   late final _snd_ctl_elem_info_is_tlv_commandablePtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<snd_ctl_elem_info_t>)>>(
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_ctl_elem_info_t>)>>(
       'snd_ctl_elem_info_is_tlv_commandable');
   late final _snd_ctl_elem_info_is_tlv_commandable =
       _snd_ctl_elem_info_is_tlv_commandablePtr
@@ -20460,9 +20460,9 @@ class ALSA {
   }
 
   late final _snd_ctl_elem_info_is_ownerPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(
-              ffi.Pointer<snd_ctl_elem_info_t>)>>('snd_ctl_elem_info_is_owner');
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_ctl_elem_info_t>)>>(
+      'snd_ctl_elem_info_is_owner');
   late final _snd_ctl_elem_info_is_owner = _snd_ctl_elem_info_is_ownerPtr
       .asFunction<int Function(ffi.Pointer<snd_ctl_elem_info_t>)>();
 
@@ -20475,9 +20475,9 @@ class ALSA {
   }
 
   late final _snd_ctl_elem_info_is_userPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(
-              ffi.Pointer<snd_ctl_elem_info_t>)>>('snd_ctl_elem_info_is_user');
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_ctl_elem_info_t>)>>(
+      'snd_ctl_elem_info_is_user');
   late final _snd_ctl_elem_info_is_user = _snd_ctl_elem_info_is_userPtr
       .asFunction<int Function(ffi.Pointer<snd_ctl_elem_info_t>)>();
 
@@ -20519,9 +20519,9 @@ class ALSA {
   }
 
   late final _snd_ctl_elem_info_get_minPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Long Function(
-              ffi.Pointer<snd_ctl_elem_info_t>)>>('snd_ctl_elem_info_get_min');
+          ffi
+          .NativeFunction<ffi.Long Function(ffi.Pointer<snd_ctl_elem_info_t>)>>(
+      'snd_ctl_elem_info_get_min');
   late final _snd_ctl_elem_info_get_min = _snd_ctl_elem_info_get_minPtr
       .asFunction<int Function(ffi.Pointer<snd_ctl_elem_info_t>)>();
 
@@ -20534,9 +20534,9 @@ class ALSA {
   }
 
   late final _snd_ctl_elem_info_get_maxPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Long Function(
-              ffi.Pointer<snd_ctl_elem_info_t>)>>('snd_ctl_elem_info_get_max');
+          ffi
+          .NativeFunction<ffi.Long Function(ffi.Pointer<snd_ctl_elem_info_t>)>>(
+      'snd_ctl_elem_info_get_max');
   late final _snd_ctl_elem_info_get_max = _snd_ctl_elem_info_get_maxPtr
       .asFunction<int Function(ffi.Pointer<snd_ctl_elem_info_t>)>();
 
@@ -20549,9 +20549,9 @@ class ALSA {
   }
 
   late final _snd_ctl_elem_info_get_stepPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Long Function(
-              ffi.Pointer<snd_ctl_elem_info_t>)>>('snd_ctl_elem_info_get_step');
+          ffi
+          .NativeFunction<ffi.Long Function(ffi.Pointer<snd_ctl_elem_info_t>)>>(
+      'snd_ctl_elem_info_get_step');
   late final _snd_ctl_elem_info_get_step = _snd_ctl_elem_info_get_stepPtr
       .asFunction<int Function(ffi.Pointer<snd_ctl_elem_info_t>)>();
 
@@ -20658,8 +20658,8 @@ class ALSA {
   }
 
   late final _snd_ctl_elem_info_get_dimensionsPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<snd_ctl_elem_info_t>)>>(
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_ctl_elem_info_t>)>>(
       'snd_ctl_elem_info_get_dimensions');
   late final _snd_ctl_elem_info_get_dimensions =
       _snd_ctl_elem_info_get_dimensionsPtr
@@ -22162,9 +22162,9 @@ class ALSA {
   }
 
   late final _snd_hctl_nonblockPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(
-              ffi.Pointer<snd_hctl_t>, ffi.Int)>>('snd_hctl_nonblock');
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_hctl_t>, ffi.Int)>>(
+      'snd_hctl_nonblock');
   late final _snd_hctl_nonblock = _snd_hctl_nonblockPtr
       .asFunction<int Function(ffi.Pointer<snd_hctl_t>, int)>();
 
@@ -22236,9 +22236,9 @@ class ALSA {
   }
 
   late final _snd_hctl_get_countPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.UnsignedInt Function(
-              ffi.Pointer<snd_hctl_t>)>>('snd_hctl_get_count');
+          ffi
+          .NativeFunction<ffi.UnsignedInt Function(ffi.Pointer<snd_hctl_t>)>>(
+      'snd_hctl_get_count');
   late final _snd_hctl_get_count = _snd_hctl_get_countPtr
       .asFunction<int Function(ffi.Pointer<snd_hctl_t>)>();
 
@@ -23094,9 +23094,9 @@ class ALSA {
   }
 
   late final _snd_mixer_waitPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(
-              ffi.Pointer<snd_mixer_t>, ffi.Int)>>('snd_mixer_wait');
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_mixer_t>, ffi.Int)>>(
+      'snd_mixer_wait');
   late final _snd_mixer_wait = _snd_mixer_waitPtr
       .asFunction<int Function(ffi.Pointer<snd_mixer_t>, int)>();
 
@@ -23177,9 +23177,9 @@ class ALSA {
   }
 
   late final _snd_mixer_get_countPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.UnsignedInt Function(
-              ffi.Pointer<snd_mixer_t>)>>('snd_mixer_get_count');
+          ffi
+          .NativeFunction<ffi.UnsignedInt Function(ffi.Pointer<snd_mixer_t>)>>(
+      'snd_mixer_get_count');
   late final _snd_mixer_get_count = _snd_mixer_get_countPtr
       .asFunction<int Function(ffi.Pointer<snd_mixer_t>)>();
 
@@ -23290,9 +23290,9 @@ class ALSA {
   }
 
   late final _snd_mixer_elem_get_typePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int32 Function(
-              ffi.Pointer<snd_mixer_elem_t>)>>('snd_mixer_elem_get_type');
+          ffi
+          .NativeFunction<ffi.Int32 Function(ffi.Pointer<snd_mixer_elem_t>)>>(
+      'snd_mixer_elem_get_type');
   late final _snd_mixer_elem_get_type = _snd_mixer_elem_get_typePtr
       .asFunction<int Function(ffi.Pointer<snd_mixer_elem_t>)>();
 
@@ -23530,9 +23530,9 @@ class ALSA {
   }
 
   late final _snd_mixer_class_freePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<snd_mixer_class_t>)>>('snd_mixer_class_free');
+          ffi
+          .NativeFunction<ffi.Void Function(ffi.Pointer<snd_mixer_class_t>)>>(
+      'snd_mixer_class_free');
   late final _snd_mixer_class_free = _snd_mixer_class_freePtr
       .asFunction<void Function(ffi.Pointer<snd_mixer_class_t>)>();
 
@@ -23657,8 +23657,8 @@ class ALSA {
   int snd_mixer_class_set_private_free(
     ffi.Pointer<snd_mixer_class_t> class_,
     ffi.Pointer<
-            ffi.NativeFunction<
-                ffi.Void Function(ffi.Pointer<snd_mixer_class_t>)>>
+            ffi
+            .NativeFunction<ffi.Void Function(ffi.Pointer<snd_mixer_class_t>)>>
         private_free,
   ) {
     return _snd_mixer_class_set_private_free(
@@ -25021,9 +25021,9 @@ class ALSA {
   }
 
   late final _snd_seq_poll_descriptors_countPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(ffi.Pointer<snd_seq_t>,
-              ffi.Short)>>('snd_seq_poll_descriptors_count');
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_seq_t>, ffi.Short)>>(
+      'snd_seq_poll_descriptors_count');
   late final _snd_seq_poll_descriptors_count =
       _snd_seq_poll_descriptors_countPtr
           .asFunction<int Function(ffi.Pointer<snd_seq_t>, int)>();
@@ -25086,9 +25086,9 @@ class ALSA {
   }
 
   late final _snd_seq_nonblockPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(
-              ffi.Pointer<snd_seq_t>, ffi.Int)>>('snd_seq_nonblock');
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_seq_t>, ffi.Int)>>(
+      'snd_seq_nonblock');
   late final _snd_seq_nonblock = _snd_seq_nonblockPtr
       .asFunction<int Function(ffi.Pointer<snd_seq_t>, int)>();
 
@@ -25146,9 +25146,9 @@ class ALSA {
   }
 
   late final _snd_seq_set_output_buffer_sizePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(ffi.Pointer<snd_seq_t>,
-              ffi.Size)>>('snd_seq_set_output_buffer_size');
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_seq_t>, ffi.Size)>>(
+      'snd_seq_set_output_buffer_size');
   late final _snd_seq_set_output_buffer_size =
       _snd_seq_set_output_buffer_sizePtr
           .asFunction<int Function(ffi.Pointer<snd_seq_t>, int)>();
@@ -25164,9 +25164,9 @@ class ALSA {
   }
 
   late final _snd_seq_set_input_buffer_sizePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(ffi.Pointer<snd_seq_t>,
-              ffi.Size)>>('snd_seq_set_input_buffer_size');
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_seq_t>, ffi.Size)>>(
+      'snd_seq_set_input_buffer_size');
   late final _snd_seq_set_input_buffer_size = _snd_seq_set_input_buffer_sizePtr
       .asFunction<int Function(ffi.Pointer<snd_seq_t>, int)>();
 
@@ -26088,9 +26088,9 @@ class ALSA {
   }
 
   late final _snd_seq_port_info_freePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<snd_seq_port_info_t>)>>('snd_seq_port_info_free');
+          ffi
+          .NativeFunction<ffi.Void Function(ffi.Pointer<snd_seq_port_info_t>)>>(
+      'snd_seq_port_info_free');
   late final _snd_seq_port_info_free = _snd_seq_port_info_freePtr
       .asFunction<void Function(ffi.Pointer<snd_seq_port_info_t>)>();
 
@@ -26121,8 +26121,8 @@ class ALSA {
   }
 
   late final _snd_seq_port_info_get_clientPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<snd_seq_port_info_t>)>>(
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_seq_port_info_t>)>>(
       'snd_seq_port_info_get_client');
   late final _snd_seq_port_info_get_client = _snd_seq_port_info_get_clientPtr
       .asFunction<int Function(ffi.Pointer<snd_seq_port_info_t>)>();
@@ -26136,9 +26136,9 @@ class ALSA {
   }
 
   late final _snd_seq_port_info_get_portPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(
-              ffi.Pointer<snd_seq_port_info_t>)>>('snd_seq_port_info_get_port');
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_seq_port_info_t>)>>(
+      'snd_seq_port_info_get_port');
   late final _snd_seq_port_info_get_port = _snd_seq_port_info_get_portPtr
       .asFunction<int Function(ffi.Pointer<snd_seq_port_info_t>)>();
 
@@ -26215,8 +26215,8 @@ class ALSA {
   }
 
   late final _snd_seq_port_info_get_midi_channelsPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<snd_seq_port_info_t>)>>(
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_seq_port_info_t>)>>(
       'snd_seq_port_info_get_midi_channels');
   late final _snd_seq_port_info_get_midi_channels =
       _snd_seq_port_info_get_midi_channelsPtr
@@ -26231,8 +26231,8 @@ class ALSA {
   }
 
   late final _snd_seq_port_info_get_midi_voicesPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<snd_seq_port_info_t>)>>(
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_seq_port_info_t>)>>(
       'snd_seq_port_info_get_midi_voices');
   late final _snd_seq_port_info_get_midi_voices =
       _snd_seq_port_info_get_midi_voicesPtr
@@ -26247,8 +26247,8 @@ class ALSA {
   }
 
   late final _snd_seq_port_info_get_synth_voicesPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<snd_seq_port_info_t>)>>(
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_seq_port_info_t>)>>(
       'snd_seq_port_info_get_synth_voices');
   late final _snd_seq_port_info_get_synth_voices =
       _snd_seq_port_info_get_synth_voicesPtr
@@ -26263,8 +26263,8 @@ class ALSA {
   }
 
   late final _snd_seq_port_info_get_read_usePtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<snd_seq_port_info_t>)>>(
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_seq_port_info_t>)>>(
       'snd_seq_port_info_get_read_use');
   late final _snd_seq_port_info_get_read_use =
       _snd_seq_port_info_get_read_usePtr
@@ -26279,8 +26279,8 @@ class ALSA {
   }
 
   late final _snd_seq_port_info_get_write_usePtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<snd_seq_port_info_t>)>>(
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_seq_port_info_t>)>>(
       'snd_seq_port_info_get_write_use');
   late final _snd_seq_port_info_get_write_use =
       _snd_seq_port_info_get_write_usePtr
@@ -26295,8 +26295,8 @@ class ALSA {
   }
 
   late final _snd_seq_port_info_get_port_specifiedPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<snd_seq_port_info_t>)>>(
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_seq_port_info_t>)>>(
       'snd_seq_port_info_get_port_specified');
   late final _snd_seq_port_info_get_port_specified =
       _snd_seq_port_info_get_port_specifiedPtr
@@ -26311,8 +26311,8 @@ class ALSA {
   }
 
   late final _snd_seq_port_info_get_timestampingPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<snd_seq_port_info_t>)>>(
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_seq_port_info_t>)>>(
       'snd_seq_port_info_get_timestamping');
   late final _snd_seq_port_info_get_timestamping =
       _snd_seq_port_info_get_timestampingPtr
@@ -26327,8 +26327,8 @@ class ALSA {
   }
 
   late final _snd_seq_port_info_get_timestamp_realPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<snd_seq_port_info_t>)>>(
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_seq_port_info_t>)>>(
       'snd_seq_port_info_get_timestamp_real');
   late final _snd_seq_port_info_get_timestamp_real =
       _snd_seq_port_info_get_timestamp_realPtr
@@ -26343,8 +26343,8 @@ class ALSA {
   }
 
   late final _snd_seq_port_info_get_timestamp_queuePtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<snd_seq_port_info_t>)>>(
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_seq_port_info_t>)>>(
       'snd_seq_port_info_get_timestamp_queue');
   late final _snd_seq_port_info_get_timestamp_queue =
       _snd_seq_port_info_get_timestamp_queuePtr
@@ -26611,9 +26611,9 @@ class ALSA {
   }
 
   late final _snd_seq_delete_portPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(
-              ffi.Pointer<snd_seq_t>, ffi.Int)>>('snd_seq_delete_port');
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_seq_t>, ffi.Int)>>(
+      'snd_seq_delete_port');
   late final _snd_seq_delete_port = _snd_seq_delete_portPtr
       .asFunction<int Function(ffi.Pointer<snd_seq_t>, int)>();
 
@@ -27452,8 +27452,8 @@ class ALSA {
   }
 
   late final _snd_seq_queue_info_get_queuePtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<snd_seq_queue_info_t>)>>(
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_seq_queue_info_t>)>>(
       'snd_seq_queue_info_get_queue');
   late final _snd_seq_queue_info_get_queue = _snd_seq_queue_info_get_queuePtr
       .asFunction<int Function(ffi.Pointer<snd_seq_queue_info_t>)>();
@@ -27484,8 +27484,8 @@ class ALSA {
   }
 
   late final _snd_seq_queue_info_get_ownerPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<snd_seq_queue_info_t>)>>(
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_seq_queue_info_t>)>>(
       'snd_seq_queue_info_get_owner');
   late final _snd_seq_queue_info_get_owner = _snd_seq_queue_info_get_ownerPtr
       .asFunction<int Function(ffi.Pointer<snd_seq_queue_info_t>)>();
@@ -27499,8 +27499,8 @@ class ALSA {
   }
 
   late final _snd_seq_queue_info_get_lockedPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.Int Function(ffi.Pointer<snd_seq_queue_info_t>)>>(
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_seq_queue_info_t>)>>(
       'snd_seq_queue_info_get_locked');
   late final _snd_seq_queue_info_get_locked = _snd_seq_queue_info_get_lockedPtr
       .asFunction<int Function(ffi.Pointer<snd_seq_queue_info_t>)>();
@@ -27651,9 +27651,9 @@ class ALSA {
   }
 
   late final _snd_seq_free_queuePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(
-              ffi.Pointer<snd_seq_t>, ffi.Int)>>('snd_seq_free_queue');
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_seq_t>, ffi.Int)>>(
+      'snd_seq_free_queue');
   late final _snd_seq_free_queue = _snd_seq_free_queuePtr
       .asFunction<int Function(ffi.Pointer<snd_seq_t>, int)>();
 
@@ -27726,9 +27726,9 @@ class ALSA {
   }
 
   late final _snd_seq_get_queue_usagePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(
-              ffi.Pointer<snd_seq_t>, ffi.Int)>>('snd_seq_get_queue_usage');
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_seq_t>, ffi.Int)>>(
+      'snd_seq_get_queue_usage');
   late final _snd_seq_get_queue_usage = _snd_seq_get_queue_usagePtr
       .asFunction<int Function(ffi.Pointer<snd_seq_t>, int)>();
 
@@ -28494,9 +28494,9 @@ class ALSA {
   }
 
   late final _snd_seq_event_input_pendingPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(
-              ffi.Pointer<snd_seq_t>, ffi.Int)>>('snd_seq_event_input_pending');
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_seq_t>, ffi.Int)>>(
+      'snd_seq_event_input_pending');
   late final _snd_seq_event_input_pending = _snd_seq_event_input_pendingPtr
       .asFunction<int Function(ffi.Pointer<snd_seq_t>, int)>();
 
@@ -28937,9 +28937,9 @@ class ALSA {
   }
 
   late final _snd_seq_set_bitPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Int, ffi.Pointer<ffi.Void>)>>('snd_seq_set_bit');
+          ffi
+          .NativeFunction<ffi.Void Function(ffi.Int, ffi.Pointer<ffi.Void>)>>(
+      'snd_seq_set_bit');
   late final _snd_seq_set_bit = _snd_seq_set_bitPtr
       .asFunction<void Function(int, ffi.Pointer<ffi.Void>)>();
 
@@ -28954,9 +28954,9 @@ class ALSA {
   }
 
   late final _snd_seq_unset_bitPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Int, ffi.Pointer<ffi.Void>)>>('snd_seq_unset_bit');
+          ffi
+          .NativeFunction<ffi.Void Function(ffi.Int, ffi.Pointer<ffi.Void>)>>(
+      'snd_seq_unset_bit');
   late final _snd_seq_unset_bit = _snd_seq_unset_bitPtr
       .asFunction<void Function(int, ffi.Pointer<ffi.Void>)>();
 
@@ -29059,9 +29059,9 @@ class ALSA {
   }
 
   late final _snd_seq_delete_simple_portPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(
-              ffi.Pointer<snd_seq_t>, ffi.Int)>>('snd_seq_delete_simple_port');
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_seq_t>, ffi.Int)>>(
+      'snd_seq_delete_simple_port');
   late final _snd_seq_delete_simple_port = _snd_seq_delete_simple_portPtr
       .asFunction<int Function(ffi.Pointer<snd_seq_t>, int)>();
 
@@ -29177,9 +29177,9 @@ class ALSA {
   }
 
   late final _snd_seq_set_client_event_filterPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(ffi.Pointer<snd_seq_t>,
-              ffi.Int)>>('snd_seq_set_client_event_filter');
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_seq_t>, ffi.Int)>>(
+      'snd_seq_set_client_event_filter');
   late final _snd_seq_set_client_event_filter =
       _snd_seq_set_client_event_filterPtr
           .asFunction<int Function(ffi.Pointer<snd_seq_t>, int)>();
@@ -29195,9 +29195,9 @@ class ALSA {
   }
 
   late final _snd_seq_set_client_pool_outputPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(ffi.Pointer<snd_seq_t>,
-              ffi.Size)>>('snd_seq_set_client_pool_output');
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_seq_t>, ffi.Size)>>(
+      'snd_seq_set_client_pool_output');
   late final _snd_seq_set_client_pool_output =
       _snd_seq_set_client_pool_outputPtr
           .asFunction<int Function(ffi.Pointer<snd_seq_t>, int)>();
@@ -29213,9 +29213,9 @@ class ALSA {
   }
 
   late final _snd_seq_set_client_pool_output_roomPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(ffi.Pointer<snd_seq_t>,
-              ffi.Size)>>('snd_seq_set_client_pool_output_room');
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_seq_t>, ffi.Size)>>(
+      'snd_seq_set_client_pool_output_room');
   late final _snd_seq_set_client_pool_output_room =
       _snd_seq_set_client_pool_output_roomPtr
           .asFunction<int Function(ffi.Pointer<snd_seq_t>, int)>();
@@ -29231,9 +29231,9 @@ class ALSA {
   }
 
   late final _snd_seq_set_client_pool_inputPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(ffi.Pointer<snd_seq_t>,
-              ffi.Size)>>('snd_seq_set_client_pool_input');
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_seq_t>, ffi.Size)>>(
+      'snd_seq_set_client_pool_input');
   late final _snd_seq_set_client_pool_input = _snd_seq_set_client_pool_inputPtr
       .asFunction<int Function(ffi.Pointer<snd_seq_t>, int)>();
 
@@ -30465,8 +30465,9 @@ typedef snd_pcm_hook_func_t = ffi.Pointer<
 
 final class snd_pcm_scope_ops_ extends ffi.Struct {
   external ffi.Pointer<
-      ffi.NativeFunction<
-          ffi.Int Function(ffi.Pointer<snd_pcm_scope_t> scope)>> enable;
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<snd_pcm_scope_t> scope)>>
+      enable;
 
   external ffi.Pointer<
       ffi.NativeFunction<
