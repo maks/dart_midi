@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:midi/alsa_midi_device.dart';
 import 'package:test/test.dart';
 
@@ -9,6 +11,10 @@ void main() {
   /// This tried to connect to a device, make sure the device is
   /// mark as connected and then disconnect it
   test('connect/connected', () async {
+    if (!Platform.isLinux) {
+      // Skip this test on Windows and macOS
+      return;
+    }
     var devices = AlsaMidiDevice.getDevices();
     AlsaMidiDevice? connectedDevice;
     for (var device in devices) {
