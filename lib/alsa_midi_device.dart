@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, constant_identifier_names
 
 import 'dart:async';
 import 'dart:ffi';
@@ -13,11 +13,11 @@ import 'alsa_generated_bindings.dart' as a;
 
 final alsa = a.ALSA(DynamicLibrary.open('libasound.so.2'));
 
-final int SND_RAWMIDI_STREAM_INPUT = 1;
-final int SND_RAWMIDI_STREAM_OUTPUT = 0;
+const SND_RAWMIDI_STREAM_INPUT = 1;
+const SND_RAWMIDI_STREAM_OUTPUT = 0;
 
 /// Happens in non-blocking mode when the read buffer is empty
-final int SND_ERROR_EAGAIN = -11; // Resource temporarily unavailable
+const SND_RAWMIDI_ERROR_EAGAIN = -11; // Resource temporarily unavailable
 
 String stringFromNative(Pointer<Char> pointer) {
   return pointer.cast<Utf8>().toDartString();
@@ -77,7 +77,7 @@ void _rxIsolate(Tuple2<SendPort, int> args) {
 
   while (true) {
     if ((status = alsa.snd_rawmidi_read(inPort, buffer.cast(), 1)) < 0) {
-      if (status == SND_ERROR_EAGAIN) {
+      if (status == SND_RAWMIDI_ERROR_EAGAIN) {
         // We have this error in non-blocking mode when the read buffer is empty
         continue; // No data available, wait for next read
       } else {
@@ -339,7 +339,6 @@ class AlsaMidiDevice {
             'error: cannot determine card shortname $card ${stringFromNative(alsa.snd_strerror(status))}');
         continue;
       }
-      // print('name: ${stringFromNative(shortname.value)}');
       status = alsa.snd_ctl_open(ctl, name, 0);
       // print("status after ctl_open $status ctl $ctl ctl.value ${ctl.value}");
       if (status < 0) {
