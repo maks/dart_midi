@@ -63,8 +63,9 @@ int lengthOfMessageType(int type) {
 
 void _rxIsolate(Tuple2<SendPort, int> args) {
   final sendPort = args.item1;
-  final Pointer<a.snd_rawmidi_> inPort =
-      Pointer<a.snd_rawmidi_>.fromAddress(args.item2);
+  final Pointer<a.snd_rawmidi_> inPort = Pointer<a.snd_rawmidi_>.fromAddress(
+    args.item2,
+  );
 
   //print('start isolate $sendPort, $inPort, ${args.item2}');
 
@@ -82,7 +83,8 @@ void _rxIsolate(Tuple2<SendPort, int> args) {
         continue; // No data available, wait for next read
       } else {
         print(
-            'Problem reading MIDI input status: $status => ${stringFromNative(alsa.snd_strerror(status))}');
+          'Problem reading MIDI input status: $status => ${stringFromNative(alsa.snd_strerror(status))}',
+        );
         throw 'Problem reading MIDI input: status = $status => ${stringFromNative(alsa.snd_strerror(status))}';
       }
     } else {
@@ -161,7 +163,8 @@ class AlsaMidiDevice {
     var status = alsa.snd_ctl_rawmidi_info(ctl, info.value);
     if (status < 0) {
       print(
-          'error: cannot get device info.value ${alsa.snd_strerror(status).cast<Utf8>().toDartString()}');
+        'error: cannot get device info.value ${alsa.snd_strerror(status).cast<Utf8>().toDartString()}',
+      );
       return;
     }
 
@@ -172,7 +175,8 @@ class AlsaMidiDevice {
     for (var i = 0; i < inCount; i++) {
       if (alsa.snd_rawmidi_info_get_subdevice(info.value) < 0) {
         print(
-            'error: snd_rawmidi_info_get_subdevice in [$i] $status ${alsa.snd_rawmidi_info_get_subdevice_name(info.value).cast<Utf8>().toDartString()}');
+          'error: snd_rawmidi_info_get_subdevice in [$i] $status ${alsa.snd_rawmidi_info_get_subdevice_name(info.value).cast<Utf8>().toDartString()}',
+        );
       } else {
         _inputPorts.add('$i');
       }
@@ -185,7 +189,8 @@ class AlsaMidiDevice {
     for (var i = 0; i < outCount; i++) {
       if (alsa.snd_rawmidi_info_get_subdevice(info.value) < 0) {
         print(
-            'error: snd_rawmidi_info_get_subdevice out [$i] $status ${alsa.snd_rawmidi_info_get_subdevice_name(info.value).cast<Utf8>().toDartString()}');
+          'error: snd_rawmidi_info_get_subdevice out [$i] $status ${alsa.snd_rawmidi_info_get_subdevice_name(info.value).cast<Utf8>().toDartString()}',
+        );
       } else {
         _outputPorts.add('$i');
       }
@@ -197,15 +202,21 @@ class AlsaMidiDevice {
     outPort = calloc<Pointer<a.snd_rawmidi_>>();
     inPort = calloc<Pointer<a.snd_rawmidi_>>();
 
-    Pointer<Char> name =
-        '${hardwareId(cardId, deviceId)},0'.toNativeUtf8().cast<Char>();
+    Pointer<Char> name = '${hardwareId(cardId, deviceId)},0'
+        .toNativeUtf8()
+        .cast<Char>();
     //print('open out port ${stringFromNative(name)}');
     var status = 0;
     if ((status = alsa.snd_rawmidi_open(
-            inPort!, outPort!, name, a.SND_RAWMIDI_NONBLOCK)) <
+          inPort!,
+          outPort!,
+          name,
+          a.SND_RAWMIDI_NONBLOCK,
+        )) <
         0) {
       print(
-          'error: cannot open card number $cardId ${stringFromNative(alsa.snd_strerror(status))}');
+        'error: cannot open card number $cardId ${stringFromNative(alsa.snd_strerror(status))}',
+      );
       return false;
     }
 
@@ -229,8 +240,11 @@ class AlsaMidiDevice {
 
     receivePort?.listen((data) {
       // print("rx data $data $_rxStreamCtrl ${_rxStreamCtrl.sink}");
-      var packet =
-          MidiMessage(data, DateTime.now().millisecondsSinceEpoch, this);
+      var packet = MidiMessage(
+        data,
+        DateTime.now().millisecondsSinceEpoch,
+        this,
+      );
       _rxStreamCtrl.add(packet);
     });
 
@@ -250,11 +264,15 @@ class AlsaMidiDevice {
       final voidBuffer = buffer.cast<Void>();
 
       int status;
-      if ((status =
-              alsa.snd_rawmidi_write(outPort!.value, voidBuffer, length)) <
+      if ((status = alsa.snd_rawmidi_write(
+            outPort!.value,
+            voidBuffer,
+            length,
+          )) <
           0) {
         print(
-            'failed to write ${alsa.snd_strerror(status).cast<Utf8>().toDartString()}');
+          'failed to write ${alsa.snd_strerror(status).cast<Utf8>().toDartString()}',
+        );
       }
     } else {
       print('outport is null');
@@ -262,6 +280,26 @@ class AlsaMidiDevice {
   }
 
   void disconnect() {
+    // IMPORTANT: Close ALSA input port FIRST to unblock the blocking
+    // snd_rawmidi_read() call in the receive isolate. The isolate is stuck
+    // in an FFI call that Isolate.kill() cannot interrupt. Closing the port
+    // causes the read to return an error, allowing the isolate to exit.
+    var status = 0;
+    if (inPort != null) {
+      if ((status = alsa.snd_rawmidi_drain(inPort!.value)) < 0) {
+        print(
+          'error: cannot drain in port $this ${stringFromNative(alsa.snd_strerror(status))}',
+        );
+      }
+      if ((status = alsa.snd_rawmidi_close(inPort!.value)) < 0) {
+        print(
+          'error: cannot close in port $this ${stringFromNative(alsa.snd_strerror(status))}',
+        );
+      }
+      inPort = null;
+    }
+
+    // Now close the receive ports and kill the isolate
     receivePort?.close();
     errorPort?.close();
     _isolate?.kill(priority: Isolate.immediate);
@@ -270,40 +308,26 @@ class AlsaMidiDevice {
     _connectedDevices.remove(hardwareId(cardId, deviceId));
     _disconnectStreamCtrl.add(this);
 
-    var status = 0;
+    // Close output port last
     if (outPort != null) {
       if ((status = alsa.snd_rawmidi_drain(outPort!.value)) < 0) {
         print(
-            'error: cannot drain out port $this ${stringFromNative(alsa.snd_strerror(status))}');
+          'error: cannot drain out port $this ${stringFromNative(alsa.snd_strerror(status))}',
+        );
       }
       if ((status = alsa.snd_rawmidi_close(outPort!.value)) < 0) {
         print(
-            'error: cannot close out port $this ${stringFromNative(alsa.snd_strerror(status))}');
+          'error: cannot close out port $this ${stringFromNative(alsa.snd_strerror(status))}',
+        );
       }
       outPort = null;
     }
 
-    if (inPort != null) {
-      if ((status = alsa.snd_rawmidi_drain(inPort!.value)) < 0) {
-        print(
-            'error: cannot drain in port $this ${stringFromNative(alsa.snd_strerror(status))}');
-      }
-      if ((status = alsa.snd_rawmidi_close(inPort!.value)) < 0) {
-        print(
-            'error: cannot close in port $this ${stringFromNative(alsa.snd_strerror(status))}');
-      }
-      inPort = null;
-    }
     connected = false;
   }
 
   Map<String, Object> get toDictionary {
-    return {
-      'name': name,
-      'id': cardId,
-      'type': type,
-      'connected': connected,
-    };
+    return {'name': name, 'id': cardId, 'type': type, 'connected': connected};
   }
 
   static List<AlsaMidiDevice> getDevices() {
@@ -318,7 +342,8 @@ class AlsaMidiDevice {
 
     if ((status = alsa.snd_card_next(card)) < 0) {
       print(
-          'error: cannot determine card number $card ${stringFromNative(alsa.snd_strerror(status))}');
+        'error: cannot determine card number $card ${stringFromNative(alsa.snd_strerror(status))}',
+      );
       return [];
     }
     // print('status $status');
@@ -336,14 +361,16 @@ class AlsaMidiDevice {
       // print("card ${card.value}");
       if ((status = alsa.snd_card_get_name(card.value, shortname)) < 0) {
         print(
-            'error: cannot determine card shortname $card ${stringFromNative(alsa.snd_strerror(status))}');
+          'error: cannot determine card shortname $card ${stringFromNative(alsa.snd_strerror(status))}',
+        );
         continue;
       }
       status = alsa.snd_ctl_open(ctl, name, 0);
       // print("status after ctl_open $status ctl $ctl ctl.value ${ctl.value}");
       if (status < 0) {
         print(
-            'error: cannot open control for card number $card ${stringFromNative(alsa.snd_strerror(status))}');
+          'error: cannot open control for card number $card ${stringFromNative(alsa.snd_strerror(status))}',
+        );
         continue;
       }
 
@@ -352,7 +379,8 @@ class AlsaMidiDevice {
         // print("status $status device.value ${device.value}");
         if (status < 0) {
           print(
-              'error: cannot determine device number ${device.value} ${stringFromNative(alsa.snd_strerror(status))}');
+            'error: cannot determine device number ${device.value} ${stringFromNative(alsa.snd_strerror(status))}',
+          );
           break;
         }
 
@@ -360,20 +388,24 @@ class AlsaMidiDevice {
           var deviceId = hardwareId(card.value, device.value);
           if (!_connectedDevices.containsKey(deviceId)) {
             // print('add unconnected device with id $deviceId');
-            devices.add(AlsaMidiDevice(
+            devices.add(
+              AlsaMidiDevice(
                 ctl.value,
                 card.value,
                 device.value,
                 stringFromNative(shortname.value),
                 'native',
-                rxStreamController));
+                rxStreamController,
+              ),
+            );
           }
         }
       } while (device.value > 0);
 
       if ((status = alsa.snd_card_next(card)) < 0) {
         print(
-            'error: cannot determine card number $card ${stringFromNative(alsa.snd_strerror(status))}');
+          'error: cannot determine card number $card ${stringFromNative(alsa.snd_strerror(status))}',
+        );
         break;
       }
 
