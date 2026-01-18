@@ -7,7 +7,6 @@ import 'dart:typed_data';
 
 import 'package:ffi/ffi.dart';
 import 'package:midi/midi.dart';
-import 'package:tuple/tuple.dart';
 
 import 'alsa_generated_bindings.dart' as a;
 
@@ -18,6 +17,10 @@ const SND_RAWMIDI_STREAM_OUTPUT = 0;
 
 /// Happens in non-blocking mode when the read buffer is empty
 const SND_RAWMIDI_ERROR_EAGAIN = -11; // Resource temporarily unavailable
+
+/// Error when device is disconnected/closed
+const SND_RAWMIDI_ERROR_ENODEV = -19; // No such device
+const SND_RAWMIDI_ERROR_EBADFD = -77; // File descriptor in bad state
 
 String stringFromNative(Pointer<Char> pointer) {
   return pointer.cast<Utf8>().toDartString();
@@ -61,37 +64,61 @@ int lengthOfMessageType(int type) {
   return 0;
 }
 
-void _rxIsolate(Tuple2<SendPort, int> args) {
-  final sendPort = args.item1;
+/// Arguments passed to the receive isolate
+class _RxIsolateArgs {
+  final SendPort sendPort;
+  final int inPortAddress;
+  final SendPort readyPort;
+
+  _RxIsolateArgs(this.sendPort, this.inPortAddress, this.readyPort);
+}
+
+Future<void> _rxIsolate(_RxIsolateArgs args) async {
+  final sendPort = args.sendPort;
   final Pointer<a.snd_rawmidi_> inPort = Pointer<a.snd_rawmidi_>.fromAddress(
-    args.item2,
+    args.inPortAddress,
   );
 
-  //print('start isolate $sendPort, $inPort, ${args.item2}');
+  // Create a receive port for stop signals
+  final stopPort = ReceivePort();
+  bool shouldStop = false;
+
+  // Send back the stop port so the main isolate can signal us
+  args.readyPort.send(stopPort.sendPort);
+
+  // Listen for stop signal (non-blocking)
+  stopPort.listen((_) {
+    shouldStop = true;
+    stopPort.close();
+  });
 
   int status = 0;
   int msgLength = 0;
-  //TODO: use a larger buffer than 1 byte, as 1 byte is likely very inefficient
   Pointer<Uint8> buffer = calloc<Uint8>();
   List<int> rxBuffer = [];
   bool isSysex = false;
 
-  while (true) {
+  while (!shouldStop) {
     if ((status = alsa.snd_rawmidi_read(inPort, buffer.cast(), 1)) < 0) {
       if (status == SND_RAWMIDI_ERROR_EAGAIN) {
-        // We have this error in non-blocking mode when the read buffer is empty
-        continue; // No data available, wait for next read
+        // No data available in non-blocking mode
+        // Yield to the event loop to allow stop signal to be processed
+        await Future.delayed(Duration.zero);
+        continue;
+      } else if (status == SND_RAWMIDI_ERROR_ENODEV ||
+          status == SND_RAWMIDI_ERROR_EBADFD) {
+        // Device was disconnected or port was closed - exit gracefully
+        break;
       } else {
+        // Other error - exit the loop
         print(
           'Problem reading MIDI input status: $status => ${stringFromNative(alsa.snd_strerror(status))}',
         );
-        throw 'Problem reading MIDI input: status = $status => ${stringFromNative(alsa.snd_strerror(status))}';
+        break;
       }
     } else {
-      // print('rx byte [${rxBuffer.length}]: ${buffer.value.toRadixString(16)}');
       if (rxBuffer.isEmpty) {
         msgLength = lengthOfMessageType(buffer.value);
-        // print('msg len:$msgLength');
         if (msgLength == -1) {
           isSysex = true;
         }
@@ -100,17 +127,20 @@ void _rxIsolate(Tuple2<SendPort, int> args) {
       rxBuffer.add(buffer.value);
 
       if (rxBuffer.length == msgLength) {
-        // print('recv buffer $rxBuffer $msgLength');
         sendPort.send(Uint8List.fromList(rxBuffer));
         rxBuffer.clear();
       } else if (isSysex && buffer.value == 0xF7) {
-        // print('recv SYSEX buffer $rxBuffer');
         sendPort.send(Uint8List.fromList(rxBuffer));
         rxBuffer.clear();
         isSysex = false;
       }
     }
   }
+
+  // Clean up
+  calloc.free(buffer);
+  // Signal that we've stopped
+  sendPort.send(null);
 }
 
 class AlsaMidiDevice {
@@ -128,6 +158,8 @@ class AlsaMidiDevice {
 
   ReceivePort? errorPort;
   ReceivePort? receivePort;
+  SendPort? _stopPort; // Port to signal the isolate to stop
+  Completer<void>? _isolateStoppedCompleter; // Completes when isolate confirms stop
 
   Pointer<a.snd_ctl_> ctl;
 
@@ -205,7 +237,6 @@ class AlsaMidiDevice {
     Pointer<Char> name = '${hardwareId(cardId, deviceId)},0'
         .toNativeUtf8()
         .cast<Char>();
-    //print('open out port ${stringFromNative(name)}');
     var status = 0;
     if ((status = alsa.snd_rawmidi_open(
           inPort!,
@@ -227,11 +258,25 @@ class AlsaMidiDevice {
 
     errorPort = ReceivePort();
     receivePort = ReceivePort();
+
+    // Create a port to receive the stop port from the isolate
+    final readyPort = ReceivePort();
+    final readyCompleter = Completer<SendPort>();
+    readyPort.listen((message) {
+      if (message is SendPort) {
+        readyCompleter.complete(message);
+        readyPort.close();
+      }
+    });
+
     _isolate = await Isolate.spawn(
       _rxIsolate,
-      Tuple2(receivePort!.sendPort, inPort!.value.address),
+      _RxIsolateArgs(receivePort!.sendPort, inPort!.value.address, readyPort.sendPort),
       onError: errorPort!.sendPort,
     );
+
+    // Wait for the isolate to send us its stop port
+    _stopPort = await readyCompleter.future;
 
     errorPort?.listen((message) {
       print('isolate error message $message');
@@ -239,7 +284,11 @@ class AlsaMidiDevice {
     });
 
     receivePort?.listen((data) {
-      // print("rx data $data $_rxStreamCtrl ${_rxStreamCtrl.sink}");
+      if (data == null) {
+        // Isolate signaled it has stopped
+        _isolateStoppedCompleter?.complete();
+        return;
+      }
       var packet = MidiMessage(
         data,
         DateTime.now().millisecondsSinceEpoch,
@@ -279,11 +328,40 @@ class AlsaMidiDevice {
     }
   }
 
-  void disconnect() {
-    // IMPORTANT: Close ALSA input port FIRST to unblock the blocking
-    // snd_rawmidi_read() call in the receive isolate. The isolate is stuck
-    // in an FFI call that Isolate.kill() cannot interrupt. Closing the port
-    // causes the read to return an error, allowing the isolate to exit.
+  Future<void> disconnect() async {
+    // Create completer to wait for isolate to confirm stop
+    _isolateStoppedCompleter = Completer<void>();
+
+    // Signal the isolate to stop - this allows it to exit its read loop
+    // cleanly before we close the port
+    _stopPort?.send(null);
+    _stopPort = null;
+
+    // Wait for the isolate to confirm it has stopped (it sends null when done)
+    // Use a timeout to avoid hanging if something goes wrong
+    if (_isolate != null) {
+      try {
+        await _isolateStoppedCompleter!.future.timeout(
+          const Duration(milliseconds: 100),
+          onTimeout: () {},
+        );
+      } catch (_) {
+        // Ignore errors - we'll kill the isolate anyway
+      }
+    }
+    _isolateStoppedCompleter = null;
+
+    // Close receive ports
+    receivePort?.close();
+    receivePort = null;
+    errorPort?.close();
+    errorPort = null;
+
+    // Kill the isolate (should already be stopped, but just in case)
+    _isolate?.kill(priority: Isolate.immediate);
+    _isolate = null;
+
+    // Now it's safe to close the ALSA ports since the isolate has stopped
     var status = 0;
     if (inPort != null) {
       if ((status = alsa.snd_rawmidi_drain(inPort!.value)) < 0) {
@@ -298,12 +376,6 @@ class AlsaMidiDevice {
       }
       inPort = null;
     }
-
-    // Now close the receive ports and kill the isolate
-    receivePort?.close();
-    errorPort?.close();
-    _isolate?.kill(priority: Isolate.immediate);
-    _isolate = null;
 
     _connectedDevices.remove(hardwareId(cardId, deviceId));
     _disconnectStreamCtrl.add(this);
@@ -346,7 +418,6 @@ class AlsaMidiDevice {
       );
       return [];
     }
-    // print('status $status');
     if (card.value < 0) {
       print('error: no sound cards found');
       return [];
@@ -358,7 +429,6 @@ class AlsaMidiDevice {
       Pointer<Int> device = calloc<Int>();
       device.value = -1;
 
-      // print("card ${card.value}");
       if ((status = alsa.snd_card_get_name(card.value, shortname)) < 0) {
         print(
           'error: cannot determine card shortname $card ${stringFromNative(alsa.snd_strerror(status))}',
@@ -366,7 +436,6 @@ class AlsaMidiDevice {
         continue;
       }
       status = alsa.snd_ctl_open(ctl, name, 0);
-      // print("status after ctl_open $status ctl $ctl ctl.value ${ctl.value}");
       if (status < 0) {
         print(
           'error: cannot open control for card number $card ${stringFromNative(alsa.snd_strerror(status))}',
@@ -376,7 +445,6 @@ class AlsaMidiDevice {
 
       do {
         status = alsa.snd_ctl_rawmidi_next_device(ctl.value, device);
-        // print("status $status device.value ${device.value}");
         if (status < 0) {
           print(
             'error: cannot determine device number ${device.value} ${stringFromNative(alsa.snd_strerror(status))}',
@@ -387,7 +455,6 @@ class AlsaMidiDevice {
         if (device.value >= 0) {
           var deviceId = hardwareId(card.value, device.value);
           if (!_connectedDevices.containsKey(deviceId)) {
-            // print('add unconnected device with id $deviceId');
             devices.add(
               AlsaMidiDevice(
                 ctl.value,
