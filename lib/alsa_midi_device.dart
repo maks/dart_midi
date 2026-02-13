@@ -102,8 +102,8 @@ Future<void> _rxIsolate(_RxIsolateArgs args) async {
     if ((status = alsa.snd_rawmidi_read(inPort, buffer.cast(), 1)) < 0) {
       if (status == SND_RAWMIDI_ERROR_EAGAIN) {
         // No data available in non-blocking mode
-        // Yield to the event loop to allow stop signal to be processed
-        await Future.delayed(Duration.zero);
+        // Sleep briefly to avoid spinning CPU, then check for stop signal
+        await Future.delayed(const Duration(milliseconds: 1));
         continue;
       } else if (status == SND_RAWMIDI_ERROR_ENODEV ||
           status == SND_RAWMIDI_ERROR_EBADFD) {
